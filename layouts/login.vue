@@ -1,0 +1,34 @@
+<template>
+  <v-app>
+    <v-app-bar app color="orange lighten-2" flat>
+      <v-row no-gutters>
+        <v-col cols="4">
+          <v-toolbar-title class="ml-2">StackOverFlow</v-toolbar-title>
+        </v-col>
+        <v-col cols="8" class="d-flex justify-end align-center">
+          <v-btn class="mr-2" outlined color="grey darken-3" to="/login">
+            Login
+          </v-btn>
+          <v-btn outlined color="grey darken-3" to="/register">
+            Register
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-app-bar>
+    <v-main>
+      <v-container>
+        <nuxt />
+      </v-container>
+    </v-main>
+  </v-app>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style scoped>
+body {
+  background: white;
+}
+</style>
