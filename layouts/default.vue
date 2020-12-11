@@ -6,13 +6,8 @@
           <v-toolbar-title v-text="title" />
         </v-col>
         <v-col cols="8" class="d-flex justify-end align-center">
-          <div class="mr-2">Vo Quang Thanh Dat</div>
-          <v-avatar size="36px">
-            <img
-              alt="Avatar"
-              src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
-            />
-          </v-avatar>
+          <div>Vo Quang Thanh Dat</div>
+          <v-icon>mdi-menu-down</v-icon>
         </v-col>
       </v-row>
     </v-app-bar>
