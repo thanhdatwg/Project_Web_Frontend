@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="mt-2">
     <v-toolbar color="cyan" dark flat>
       <v-toolbar-title>Top Questions</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -26,7 +26,7 @@
       </template>
     </v-toolbar>
 
-    <v-tabs-items v-model="tab">
+    <v-tabs-items v-model="tab" style="max-height: 610px; overflow: auto;">
       <v-tab-item v-for="item in items" :key="item">
         <v-card
           v-for="(infoQuestion, index) in infoQuestions"
@@ -35,23 +35,42 @@
         >
           <v-card-text>
             <v-row no-gutters class="d-flex justify-center" align="center">
-              <v-col cols="1" align="center">
+              <v-col
+                cols="1"
+                align="center"
+                :style="
+                  infoQuestion.vote > 10 ? `border: 1px solid green` : false
+                "
+              >
                 <div>{{ infoQuestion.vote }}</div>
                 <div>vote</div>
               </v-col>
-              <v-col cols="1" align="center">
+              <v-col
+                cols="1"
+                align="center"
+                :style="
+                  infoQuestion.answer > 10 ? `border: 1px solid green` : false
+                "
+              >
                 <div>{{ infoQuestion.answer }}</div>
                 <div>answer</div>
               </v-col>
-              <v-col cols="1" align="center" style="border: 1px solid green">
+              <v-col
+                cols="1"
+                align="center"
+                :style="
+                  infoQuestion.views > 10 ? `border: 1px solid green` : false
+                "
+              >
                 <div>{{ infoQuestion.views }}</div>
                 <div>views</div>
               </v-col>
               <v-spacer></v-spacer>
               <v-col cols="8">
                 <div
+                  @click="$router.push('/question-detail')"
                   class="text-body-2 font-weight-medium"
-                  style="color:#0064BD"
+                  style="color:#0064BD; cursor: pointer;"
                 >
                   {{ infoQuestion.title }}
                 </div>
@@ -88,14 +107,14 @@ export default {
             "Is there a way to customize the input element for an Faktor-IPS extension property?",
           vote: 3,
           answer: 2,
-          views: 100,
+          views: 5,
           creator: "Võ Quang Thành Đạt",
           timeCreate: "2 days ago"
         },
         {
           title:
             "Getting analysis exception; parquet data source does not support null data type in pyspark",
-          vote: 10,
+          vote: 12,
           answer: 5,
           views: 20,
           creator: "Nguyễn Khắc Thắng",
@@ -106,7 +125,7 @@ export default {
             "I'm writing a code to take a user input and provide its documentation in python. But the string in the user input is used with quotes in python",
           vote: 4,
           answer: 5,
-          views: 17,
+          views: 14,
           creator: "Vũ Xuân Chiến",
           timeCreate: "2 days ago"
         },

@@ -2,12 +2,24 @@
   <v-app>
     <v-app-bar :clipped-left="clipped" fixed app color="orange lighten-2">
       <v-row no-gutters>
-        <v-col cols="4">
+        <v-spacer></v-spacer>
+        <v-col cols="3" class="d-flex align-center pl-2">
           <v-toolbar-title v-text="title" />
         </v-col>
         <v-col cols="8" class="d-flex justify-end align-center">
           <div>Vo Quang Thanh Dat</div>
-          <v-icon>mdi-menu-down</v-icon>
+          <v-menu offset-y transition="slide-y-transition" bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon v-bind="attrs" v-on="on">
+                <v-icon>mdi-menu-down</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item v-for="(item, i) in items" :key="i">
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </v-col>
       </v-row>
     </v-app-bar>
@@ -27,16 +39,10 @@ export default {
       drawer: false,
       fixed: false,
       items: [
-        {
-          icon: "mdi-apps",
-          title: "Welcome",
-          to: "/"
-        },
-        {
-          icon: "mdi-chart-bubble",
-          title: "Inspire",
-          to: "/inspire"
-        }
+        { title: "Click Me" },
+        { title: "Click Me" },
+        { title: "Click Me" },
+        { title: "Click Me 2" }
       ],
       miniVariant: false,
       right: true,
