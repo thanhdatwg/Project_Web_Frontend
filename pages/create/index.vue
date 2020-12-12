@@ -25,15 +25,15 @@
         <div class="strong">
           Include all the information someone would need to answer your question
         </div>
-        <v-textarea
-          class="mt-2"
-          outlined
-          name="input-7-4"
-          placeholder="Description..."
-        ></v-textarea>
+        <vue-editor
+          @text-change="errorContent = []"
+          placeholder="content..."
+          id="height-editor"
+          v-model="content"
+        ></vue-editor>
       </div>
     </v-card-text>
-    <v-card-actions class="mt-n4">
+    <v-card-actions class="mt-n4 ml-2">
       <v-btn depressed color="primary">
         Review your question
       </v-btn>
