@@ -6,7 +6,7 @@
         <v-col cols="3" class="d-flex align-center pl-2">
           <v-toolbar-title v-text="title" />
         </v-col>
-        <v-col cols="8" class="d-flex justify-end align-center">
+        <v-col cols="8" class="d-flex justify-end align-center pr-6">
           <div>Vo Quang Thanh Dat</div>
           <v-menu offset-y transition="slide-y-transition" bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -15,8 +15,19 @@
               </v-btn>
             </template>
             <v-list>
-              <v-list-item v-for="(item, i) in items" :key="i">
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              <v-list-item>
+                <v-list-item-title
+                  @click="$router.push('/profile')"
+                  style="cursor: pointer;"
+                  >Profile</v-list-item-title
+                >
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title
+                  @click="$router.push('/login')"
+                  style="cursor: pointer;"
+                  >Sign out</v-list-item-title
+                >
               </v-list-item>
             </v-list>
           </v-menu>
@@ -38,12 +49,7 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      items: [
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me 2" }
-      ],
+      items: [{ title: "Profile" }, { title: "Sign out" }],
       miniVariant: false,
       right: true,
       rightDrawer: false,
