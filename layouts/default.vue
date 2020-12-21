@@ -6,7 +6,11 @@
         <v-col cols="3" class="d-flex align-center pl-2">
           <v-toolbar-title v-text="title" />
         </v-col>
-        <v-col cols="8" class="d-flex justify-end align-center pr-6">
+        <v-col
+          cols="8"
+          class="d-flex justify-end align-center pr-6"
+          v-if="$store.state.app.token"
+        >
           <div>Vo Quang Thanh Dat</div>
           <v-menu offset-y transition="slide-y-transition" bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -31,6 +35,14 @@
               </v-list-item>
             </v-list>
           </v-menu>
+        </v-col>
+        <v-col v-else cols="8" class="d-flex justify-end align-center pr-6">
+          <v-btn class="mr-2" outlined color="grey darken-3" to="/login">
+            Login
+          </v-btn>
+          <v-btn outlined color="grey darken-3" to="/register">
+            Register
+          </v-btn>
         </v-col>
       </v-row>
     </v-app-bar>
