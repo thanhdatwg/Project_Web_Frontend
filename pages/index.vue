@@ -114,7 +114,7 @@ export default {
   },
   mounted() {
     axios
-      .get("https://project-web-subject.herokuapp.com/api/questions")
+      .get("http://localhost:8000/api/questions")
       .then(response => {
         console.log(response.data);
         this.infoQuestions = response.data.data;

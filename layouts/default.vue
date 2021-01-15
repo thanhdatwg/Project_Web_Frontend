@@ -9,7 +9,7 @@
         <v-col
           cols="8"
           class="d-flex justify-end align-center pr-6"
-          v-if="$store.state.app.token"
+          v-if="$store.state.token"
         >
           <div>Vo Quang Thanh Dat</div>
           <v-menu offset-y transition="slide-y-transition" bottom>

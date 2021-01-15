@@ -125,11 +125,25 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  data(){
+  data() {
     return {
       content: null,
-    }
+      detailQuestion: {}
+    };
+  },
+  mounted() {
+    axios
+      .get("http://localhost:8000/api/questions/" + this.$route.params.id)
+      .then(response => {
+        console.log(response.data);
+        this.detailQuestion = response.data.data;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    console.log(this.$route);
   }
 };
 </script>
