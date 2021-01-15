@@ -39,27 +39,34 @@
                 cols="1"
                 align="center"
                 :style="
-                  infoQuestion.vote > 10 ? `border: 1px solid green` : false
+                  infoQuestion.votes_count >= 10
+                    ? `border: 1px solid green`
+                    : false
                 "
               >
-                <div>{{ infoQuestion.vote }}</div>
+                <div v-if="infoQuestion.votes_count !== null">
+                  {{ infoQuestion.votes_count }}
+                </div>
+                <div v-else>0</div>
                 <div>vote</div>
               </v-col>
               <v-col
                 cols="1"
                 align="center"
                 :style="
-                  infoQuestion.answer > 10 ? `border: 1px solid green` : false
+                  infoQuestion.answers_count >= 10
+                    ? `border: 1px solid green`
+                    : false
                 "
               >
-                <div>{{ infoQuestion.answer }}</div>
+                <div>{{ infoQuestion.answers_count }}</div>
                 <div>answer</div>
               </v-col>
               <v-col
                 cols="1"
                 align="center"
                 :style="
-                  infoQuestion.views > 10 ? `border: 1px solid green` : false
+                  infoQuestion.views >= 10 ? `border: 1px solid green` : false
                 "
               >
                 <div>{{ infoQuestion.views }}</div>
@@ -68,7 +75,7 @@
               <v-spacer></v-spacer>
               <v-col cols="8">
                 <div
-                  @click="$router.push('/question-detail')"
+                  @click="$router.push('/question-detail/' + infoQuestion.slug)"
                   class="text-body-2 font-weight-medium"
                   style="color:#0064BD; cursor: pointer;"
                 >
@@ -78,8 +85,11 @@
             </v-row>
             <v-row no-gutters>
               <v-col cols="12" class="d-flex justify-end"
-                >Asked by {{ infoQuestion.creator }}
-                {{ infoQuestion.timeCreate }}</v-col
+                >Asked by
+                <span class="text-body-1 black--text ml-1 mr-1">
+                  {{ infoQuestion.user.name }}
+                </span>
+                {{ infoQuestion.created_date }}</v-col
               >
             </v-row>
           </v-card-text>
@@ -93,111 +103,25 @@
 <script>
 // import Logo from "~/components/Logo.vue";
 // import VuetifyLogo from "~/components/VuetifyLogo.vue";
-
+import axios from "axios";
 export default {
   data() {
     return {
       tab: null,
       items: ["All", "Interesting", "Bountied", "Hot", "Week"],
-      text:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      infoQuestions: [
-        {
-          title:
-            "Is there a way to customize the input element for an Faktor-IPS extension property?",
-          vote: 3,
-          answer: 2,
-          views: 5,
-          creator: "Võ Quang Thành Đạt",
-          timeCreate: "2 days ago"
-        },
-        {
-          title:
-            "Getting analysis exception; parquet data source does not support null data type in pyspark",
-          vote: 12,
-          answer: 5,
-          views: 20,
-          creator: "Nguyễn Khắc Thắng",
-          timeCreate: "5 days ago"
-        },
-        {
-          title:
-            "I'm writing a code to take a user input and provide its documentation in python. But the string in the user input is used with quotes in python",
-          vote: 4,
-          answer: 5,
-          views: 14,
-          creator: "Vũ Xuân Chiến",
-          timeCreate: "2 days ago"
-        },
-        {
-          title:
-            "view show can we access the datatable individual column searched value to controller(C# .net Mvc) while using the server side processing?",
-          vote: 3,
-          answer: 2,
-          views: 100,
-          creator: "Võ Quang Thành Đạt",
-          timeCreate: "8 days ago"
-        },
-        {
-          title:
-            "JS : How to modify options we receive in event Handler and pass it further to original handler function?",
-          vote: 0,
-          answer: 0,
-          views: 10,
-          creator: "Võ Quang Thành Đạt",
-          timeCreate: "9 days ago"
-        },
-        {
-          title:
-            "Python programs hangs after aycnio exception due to Pyppeteer unexpectedly closing",
-          vote: 5,
-          answer: 4,
-          views: 30,
-          creator: "Võ Quang Thành Đạt",
-          timeCreate: "2 days ago"
-        },
-        {
-          title:
-            "Python programs hangs after aycnio exception due to Pyppeteer unexpectedly closing",
-          vote: 5,
-          answer: 4,
-          views: 30,
-          creator: "Võ Quang Thành Đạt",
-          timeCreate: "2 days ago"
-        },
-        {
-          title:
-            "Python programs hangs after aycnio exception due to Pyppeteer unexpectedly closing",
-          vote: 5,
-          answer: 4,
-          views: 30,
-          creator: "Võ Quang Thành Đạt",
-          timeCreate: "2 days ago"
-        },
-        {
-          title:
-            "Python programs hangs after aycnio exception due to Pyppeteer unexpectedly closing",
-          vote: 5,
-          answer: 4,
-          views: 30,
-          creator: "Võ Quang Thành Đạt",
-          timeCreate: "2 days ago"
-        },
-        {
-          title:
-            "Python programs hangs after aycnio exception due to Pyppeteer unexpectedly closing",
-          vote: 5,
-          answer: 4,
-          views: 30,
-          creator: "Võ Quang Thành Đạt",
-          timeCreate: "2 days ago"
-        }
-      ]
+      infoQuestions: []
     };
+  },
+  mounted() {
+    axios
+      .get("https://project-web-subject.herokuapp.com/api/questions")
+      .then(response => {
+        console.log(response.data);
+        this.infoQuestions = response.data.data;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
-  // components: {
-  //   Logo,
-  //   VuetifyLogo
-  // }
 };
 </script>

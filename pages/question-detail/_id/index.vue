@@ -125,7 +125,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data(){
+    return {
+      content: null,
+    }
+  }
+};
 </script>
 
 <style></style>
