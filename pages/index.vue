@@ -26,7 +26,7 @@
       </template>
     </v-toolbar>
 
-    <v-tabs-items v-model="tab" style="max-height: 610px; overflow: auto;">
+    <v-tabs-items v-model="tab" style="max-height: 570px; overflow: auto;">
       <v-tab-item v-for="item in items" :key="item">
         <v-card
           v-for="(infoQuestion, index) in infoQuestions"
@@ -97,31 +97,47 @@
         </v-card>
       </v-tab-item>
     </v-tabs-items>
+    <v-card-actions style="border: 1px solid orange" class="justify-center">
+      <v-btn @click="prevData"><v-icon>mdi-arrow-left</v-icon></v-btn>
+      <v-btn @click="nextData"><v-icon>mdi-arrow-right</v-icon></v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
 <script>
-// import Logo from "~/components/Logo.vue";
-// import VuetifyLogo from "~/components/VuetifyLogo.vue";
 import axios from "axios";
 export default {
   data() {
     return {
       tab: null,
-      items: ["All", "Interesting", "Bountied", "Hot", "Week"],
-      infoQuestions: []
+      items: ["All"],
+      infoQuestions: [],
+      page_index: 1
     };
   },
   mounted() {
-    axios
-      .get("http://localhost:8000/api/questions")
-      .then(response => {
-        console.log(response.data);
-        this.infoQuestions = response.data.data;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    this.getAllQuestions();
+  },
+  methods: {
+    getAllQuestions() {
+      axios
+        .get("http://localhost:8000/api/questions?page=" + this.page_index)
+        .then(response => {
+          console.log(response.data);
+          this.infoQuestions = response.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    prevData() {
+      this.page_index = this.page_index - 1;
+      this.getAllQuestions();
+    },
+    nextData() {
+      this.page_index = this.page_index + 1;
+      this.getAllQuestions();
+    }
   }
 };
 </script>

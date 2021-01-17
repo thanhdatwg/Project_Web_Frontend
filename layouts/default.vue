@@ -27,9 +27,7 @@
                 >
               </v-list-item>
               <v-list-item>
-                <v-list-item-title
-                  @click="$router.push('/login')"
-                  style="cursor: pointer;"
+                <v-list-item-title @click="onLogout" style="cursor: pointer;"
                   >Sign out</v-list-item-title
                 >
               </v-list-item>
@@ -67,6 +65,12 @@ export default {
       rightDrawer: false,
       title: "StackOverFlow"
     };
+  },
+  methods: {
+    onLogout() {
+      this.$store.dispatch("logout");
+      this.$router.push("/login");
+    }
   }
 };
 </script>

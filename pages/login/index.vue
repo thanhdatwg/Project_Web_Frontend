@@ -13,6 +13,7 @@
         <v-text-field
           label="Email"
           type="text"
+          v-model="username"
           filled
           class="rounded-t-lg"
           placeholder=" "
@@ -20,6 +21,7 @@
         <v-text-field
           label="Password"
           type="password"
+          v-model="password"
           filled
           class="rounded-t-lg mt-n1"
           placeholder=" "
@@ -42,6 +44,30 @@
 
 <script>
 export default {
-  layout: "login"
+  layout: "login",
+  data() {
+    return {
+      username: "",
+      password: ""
+    };
+  },
+  methods: {
+    checkAccount() {
+      this.$store
+        .dispatch("authenticateUser", {
+          username: this.username,
+          password: this.password
+        })
+        .then(response => {
+          console.log(this.$store.state.token);
+          if (this.$store.state.token != null) {
+            this.$router.push("/");
+          } else this.$router.push("/login");
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+  }
 };
 </script>
