@@ -5,7 +5,10 @@
       @favorite="favorite"
       @getDetailQuestion="getDetailQuestion"
     ></detailQuestion>
-    <allAnswers :allAnswers="allAnswers"></allAnswers>
+    <allAnswers
+      :allAnswers="allAnswers"
+      @getDetailAnswer="getAllAnswer"
+    ></allAnswers>
     <createAnswer
       :detailQuestion="detailQuestion"
       @getAllAnswerAgain="getAllAnswer"

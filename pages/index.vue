@@ -113,6 +113,7 @@
 
 <script>
 import axios from "axios";
+import Cookie from "js-cookie";
 export default {
   data() {
     return {
@@ -125,8 +126,15 @@ export default {
   },
   mounted() {
     this.getAllQuestions();
+    // this.getInfoUser();
   },
   methods: {
+    // getInfoUser() {
+    //   this.$store.dispatch("informationUser").then(response => {
+    //     const info = Cookie.get("infoAcc");
+    //     console.log(JSON.parse(info));
+    //   });
+    // },
     getAllQuestions() {
       axios
         .get("http://localhost:8000/api/questions?page=1")

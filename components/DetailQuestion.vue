@@ -2,7 +2,7 @@
   <v-card class="mt-5">
     <v-card-title class="elevation-1">
       <v-row no-gutters>
-        <v-col class="col-auto">
+        <v-col class="col-auto ml-5">
           <div>{{ detailQuestion.title }}</div>
         </v-col>
         <v-spacer></v-spacer>
@@ -17,9 +17,15 @@
     <v-card-text>
       <v-row no-gutters>
         <v-col class="col-auto" align="center">
-          <v-icon size="55" @click="voteQuestion(1)">mdi-menu-up</v-icon>
-          <div class="text-body-1">{{ detailQuestion.votes_count }}</div>
-          <v-icon size="55" @click="voteQuestion(-1)">mdi-menu-down</v-icon>
+          <v-icon size="55" @click="voteQuestion(1)" color="primary"
+            >mdi-menu-up</v-icon
+          >
+          <div class="text-body-1 font-weight-medium black--text">
+            {{ detailQuestion.votes_count }}
+          </div>
+          <v-icon size="55" @click="voteQuestion(-1)" color="primary"
+            >mdi-menu-down</v-icon
+          >
           <div>
             <v-icon
               size="40"

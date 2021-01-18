@@ -2,7 +2,8 @@ import Vuex from "vuex";
 import axios from "axios";
 import Cookie from "js-cookie";
 const state = () => ({
-  token: null
+  token: null,
+  infoUser: {}
 });
 
 const mutations = {
@@ -12,6 +13,9 @@ const mutations = {
   },
   clearToken(state) {
     state.token = null;
+  },
+  setInfoUser(state, info) {
+    state.infoUser = info;
   }
 };
 
@@ -38,15 +42,33 @@ const actions = {
           "expirationDate",
           new Date().getTime + Number.parseInt(result.data.expires_in) * 1000
         );
+
+        const baseUrl = "http://localhost:8000/api/user";
+        return axios
+          .get(baseUrl, {
+            headers: {
+              Authorization: "Bearer " + Cookie.get("jwt")
+            }
+          })
+          .then(result => {
+            // vuexContext.commit("setInfoUser", result.data);
+            localStorage.setItem("infoAcc", result.data);
+            Cookie.set("infoAcc", result.data);
+          });
       })
       .catch(e => {});
   },
+  // informationUser(vuexContext) {
+
+  // },
   logout(vuexContext) {
     vuexContext.commit("clearToken");
     Cookie.remove("jwt");
+    Cookie.remove("infoAcc");
     Cookie.remove("expirationDate");
 
     localStorage.removeItem("token");
+    localStorage.removeItem("infoAcc");
     localStorage.removeItem("tokenExpiration");
   }
 };

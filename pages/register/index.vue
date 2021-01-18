@@ -9,8 +9,9 @@
       ></v-img>
     </v-col>
     <v-col cols="8" align="center" class="mx-auto">
-      <v-form @submit.prevent="checkAccount">
+      <v-form @submit.prevent="createAccount">
         <v-text-field
+          v-model="email"
           label="Email"
           type="text"
           filled
@@ -18,6 +19,15 @@
           placeholder=" "
         ></v-text-field>
         <v-text-field
+          v-model="name"
+          label="Name"
+          type="text"
+          filled
+          class="rounded-t-lg"
+          placeholder=" "
+        ></v-text-field>
+        <v-text-field
+          v-model="password"
           label="Password"
           type="password"
           filled
@@ -25,6 +35,7 @@
           placeholder=" "
         ></v-text-field>
         <v-text-field
+          v-model="password"
           label="Confirm Password"
           type="password"
           filled
@@ -48,7 +59,30 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  layout: "login"
+  layout: "login",
+  data() {
+    return {
+      email: "",
+      password: null,
+      name: ""
+    };
+  },
+  methods: {
+    createAccount() {
+      axios
+        .post("http://127.0.0.1:8000/api/register", {
+          email: this.email,
+          password: this.password,
+          name: this.name
+        })
+        .then(response => {
+          if (response.status == 201) {
+            this.$router.push("/login");
+          }
+        });
+    }
+  }
 };
 </script>
