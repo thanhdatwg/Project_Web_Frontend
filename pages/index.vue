@@ -26,7 +26,7 @@
       </template>
     </v-toolbar>
 
-    <v-tabs-items v-model="tab" style="max-height: 570px; overflow: auto;">
+    <v-tabs-items v-model="tab" style="max-height: 565px; overflow: auto;">
       <v-tab-item v-for="item in items" :key="item">
         <v-card
           v-for="(infoQuestion, index) in infoQuestions"
@@ -36,6 +36,7 @@
           <v-card-text>
             <v-row no-gutters class="d-flex justify-center" align="center">
               <v-col
+                class="mr-1"
                 cols="1"
                 align="center"
                 :style="
@@ -51,6 +52,7 @@
                 <div>vote</div>
               </v-col>
               <v-col
+                class="mr-1"
                 cols="1"
                 align="center"
                 :style="
@@ -63,6 +65,7 @@
                 <div>answer</div>
               </v-col>
               <v-col
+                class="mr-1"
                 cols="1"
                 align="center"
                 :style="
@@ -73,7 +76,7 @@
                 <div>views</div>
               </v-col>
               <v-spacer></v-spacer>
-              <v-col cols="8">
+              <v-col cols="7">
                 <div
                   @click="$router.push('/question-detail/' + infoQuestion.slug)"
                   class="text-body-2 font-weight-medium"
@@ -98,8 +101,12 @@
       </v-tab-item>
     </v-tabs-items>
     <v-card-actions style="border: 1px solid orange" class="justify-center">
-      <v-btn @click="prevData"><v-icon>mdi-arrow-left</v-icon></v-btn>
-      <v-btn @click="nextData"><v-icon>mdi-arrow-right</v-icon></v-btn>
+      <v-btn @click="prevData" color="primary"
+        ><v-icon>mdi-arrow-left</v-icon></v-btn
+      >
+      <v-btn @click="nextData" color="primary"
+        ><v-icon>mdi-arrow-right</v-icon></v-btn
+      >
     </v-card-actions>
   </v-card>
 </template>
@@ -112,7 +119,8 @@ export default {
       tab: null,
       items: ["All"],
       infoQuestions: [],
-      page_index: 1
+      prev_link: null,
+      next_link: null
     };
   },
   mounted() {
@@ -121,22 +129,42 @@ export default {
   methods: {
     getAllQuestions() {
       axios
-        .get("http://localhost:8000/api/questions?page=" + this.page_index)
+        .get("http://localhost:8000/api/questions?page=1")
         .then(response => {
           console.log(response.data);
           this.infoQuestions = response.data.data;
+          this.prev_link = response.data.links.prev;
+          this.next_link = response.data.links.next;
         })
         .catch(function(error) {
           console.log(error);
         });
     },
     prevData() {
-      this.page_index = this.page_index - 1;
-      this.getAllQuestions();
+      axios
+        .get(this.prev_link)
+        .then(response => {
+          // console.log(response.data);
+          this.infoQuestions = response.data.data;
+          this.prev_link = response.data.links.prev;
+          this.next_link = response.data.links.next;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
     nextData() {
-      this.page_index = this.page_index + 1;
-      this.getAllQuestions();
+      axios
+        .get(this.next_link)
+        .then(response => {
+          // console.log(response.data);
+          this.infoQuestions = response.data.data;
+          this.prev_link = response.data.links.prev;
+          this.next_link = response.data.links.next;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   }
 };

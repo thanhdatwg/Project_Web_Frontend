@@ -9,7 +9,7 @@
         <v-col
           cols="8"
           class="d-flex justify-end align-center pr-6"
-          v-if="$store.state.token"
+          v-if="getToken()"
         >
           <div>Vo Quang Thanh Dat</div>
           <v-menu offset-y transition="slide-y-transition" bottom>
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import Cookie from "js-cookie";
 export default {
   data() {
     return {
@@ -70,6 +71,11 @@ export default {
     onLogout() {
       this.$store.dispatch("logout");
       this.$router.push("/login");
+    },
+    getToken() {
+      if (Cookie.get("jwt") != null) {
+        return true;
+      } else return false;
     }
   }
 };

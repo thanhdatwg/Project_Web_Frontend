@@ -7,7 +7,7 @@
         </v-col>
         <v-spacer></v-spacer>
         <v-col class="col-auto"
-          ><v-btn color="grey lighten-1" depressed to="/create"
+          ><v-btn color="cyan lighten-1" depressed to="/create"
             >Ask Question</v-btn
           ></v-col
         >
@@ -21,14 +21,16 @@
           <div class="text-body-1">{{ detailQuestion.votes_count }}</div>
           <v-icon size="55">mdi-menu-down</v-icon>
           <div>
-            <v-icon size="40" :color="getColor()" @click="favoriteQuestion"
+            <v-icon
+              size="40"
+              :color="detailQuestion.is_favorited ? 'orange' : 'grey'"
+              @click="favoriteQuestion"
               >mdi-star</v-icon
             >
           </div>
           <div class="text-body-1">{{ detailQuestion.favorites_count }}</div>
         </v-col>
-        <v-col cols="10" class="mt-4 ml-4">
-          {{ detailQuestion.body }}
+        <v-col cols="10" class="mt-4 ml-4" v-html="detailQuestion.body">
         </v-col>
       </v-row>
     </v-card-text>
@@ -37,6 +39,7 @@
 
 <script>
 import axios from "axios";
+import Cookie from "js-cookie";
 export default {
   props: {
     detailQuestion: {
@@ -45,11 +48,6 @@ export default {
     }
   },
   methods: {
-    getColor() {
-      if (this.detailQuestion.is_favorited) {
-        return "orange";
-      } else return "grey";
-    },
     voteQuestion() {
       axios
         .post(
@@ -59,13 +57,12 @@ export default {
           { vote: 1 },
           {
             headers: {
-              Authorization: "Bearer " + this.$store.state.token
+              Authorization: "Bearer " + Cookie.get("jwt")
             }
           }
         )
         .then(function(response) {
           console.log(response);
-          this.$router.reload();
         })
         .catch(function(error) {
           console.log(error);
@@ -74,7 +71,7 @@ export default {
     favoriteQuestion() {
       let axiosConfig = {
         headers: {
-          Authorization: "Bearer " + this.$store.state.token
+          Authorization: "Bearer " + Cookie.get("jwt")
         }
       };
       axios
@@ -82,10 +79,10 @@ export default {
           "http://localhost:8000/api/questions/" +
             this.detailQuestion.id +
             "/favorites",
-          { vote: 1 },
+          {},
           {
             headers: {
-              Authorization: "Bearer " + this.$store.state.token
+              Authorization: "Bearer " + Cookie.get("jwt")
             }
           }
         )

@@ -21,9 +21,7 @@
           <div class="text-body-1">{{ answer.votes_count }}</div>
           <v-icon size="55">mdi-menu-down</v-icon>
         </v-col>
-        <v-col cols="10" class="ml-4">
-          {{ answer.body }}
-        </v-col>
+        <v-col cols="10" class="ml-4" v-html="answer.body"> </v-col>
         <v-col cols="12">
           <v-divider></v-divider>
         </v-col>

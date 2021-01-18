@@ -34,7 +34,7 @@ const actions = {
           new Date().getTime + Number.parseInt(result.data.expires_in) * 1000
         );
 
-        Cookie.set("jwt", result.data.idToken); // lưu giá trị token vào biến jwt trong cookie
+        Cookie.set("jwt", result.data.access_token); // lưu giá trị token vào biến jwt trong cookie
         Cookie.set(
           "expirationDate",
           new Date().getTime + Number.parseInt(result.data.expires_in) * 1000

@@ -27,6 +27,7 @@
 
 <script>
 import axios from "axios";
+import Cookie from "js-cookie";
 export default {
   props: {
     detailQuestion: {
@@ -40,11 +41,14 @@ export default {
       content: null
     };
   },
+  mounted() {
+    console.log(this.detailQuestion, "componennttt");
+  },
   methods: {
     postAnswer() {
       let axiosConfig = {
         headers: {
-          Authorization: "Bearer " + this.$store.state.token
+          Authorization: "Bearer " + Cookie.get("jwt")
         }
       };
       axios
@@ -58,18 +62,23 @@ export default {
           axiosConfig
         )
         .then(function(response) {
-          //   value = this.detailQuestion.id;
-          //   if (response.status === 200) {
-          //     axios
-          //       .get("http://localhost:8000/api/questions/" + value + "/answers")
-          //       .then(response => {
-          //         console.log(this.allAnswers, "all Answer load 2 ");
-          //       })
-          //       .catch(function(error) {
-          //         console.log(error);
-          //       });
-          //   }
-          //   console.log(response.status === 200);
+          console.log(response.data.answer.question_id);
+          if (response.status == 200) {
+            // console.log(response.data.answer.question_id, "id");
+            // axios
+            //   .get(
+            //     "http://localhost:8000/api/questions/" +
+            //       response.data.answer.question_id +
+            //       "/answers"
+            //   )
+            //   .then(res => {
+            //     // this.allAnswers = response.data.data;
+            //     console.log(res, "all Answer");
+            //   })
+            //   .catch(function(error) {
+            //     console.log(error);
+            //   });
+          }
         })
         .catch(function(error) {
           console.log(error);
