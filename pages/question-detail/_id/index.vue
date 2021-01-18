@@ -1,8 +1,15 @@
 <template>
   <div>
-    <detailQuestion :detailQuestion="detailQuestion"></detailQuestion>
+    <detailQuestion
+      :detailQuestion="detailQuestion"
+      @favorite="favorite"
+      @getDetailQuestion="getDetailQuestion"
+    ></detailQuestion>
     <allAnswers :allAnswers="allAnswers"></allAnswers>
-    <createAnswer :detailQuestion="detailQuestion"></createAnswer>
+    <createAnswer
+      :detailQuestion="detailQuestion"
+      @getAllAnswerAgain="getAllAnswer"
+    ></createAnswer>
   </div>
 </template>
 
@@ -20,23 +27,27 @@ export default {
   data() {
     return {
       detailQuestion: {},
-      allAnswers: []
+      allAnswers: [],
+      favoritesCount: null
     };
   },
   mounted() {
-    axios
-      .get("http://localhost:8000/api/questions/" + this.$route.params.id)
-      .then(response => {
-        console.log(response.data.data, "detail question");
-        this.detailQuestion = response.data.data;
-        this.getAllAnswer();
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-    console.log(this.$route);
+    this.getDetailQuestion();
   },
   methods: {
+    favorite() {
+      console.log(this.favoritesCount);
+    },
+    getDetailQuestion() {
+      axios
+        .get("http://localhost:8000/api/questions/" + this.$route.params.id)
+        .then(response => {
+          this.detailQuestion = response.data.data;
+          this.favoritesCount = response.data.data.favorites_count;
+          this.getAllAnswer();
+        })
+        .catch(function(error) {});
+    },
     getAllAnswer() {
       axios
         .get(
@@ -46,11 +57,8 @@ export default {
         )
         .then(response => {
           this.allAnswers = response.data.data;
-          console.log(this.allAnswers, "all Answer");
         })
-        .catch(function(error) {
-          console.log(error);
-        });
+        .catch(function(error) {});
     }
   }
 };

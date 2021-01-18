@@ -41,9 +41,6 @@ export default {
       content: null
     };
   },
-  mounted() {
-    console.log(this.detailQuestion, "componennttt");
-  },
   methods: {
     postAnswer() {
       let axiosConfig = {
@@ -61,28 +58,15 @@ export default {
           },
           axiosConfig
         )
-        .then(function(response) {
-          console.log(response.data.answer.question_id);
+        .then(response => {
           if (response.status == 200) {
-            // console.log(response.data.answer.question_id, "id");
-            // axios
-            //   .get(
-            //     "http://localhost:8000/api/questions/" +
-            //       response.data.answer.question_id +
-            //       "/answers"
-            //   )
-            //   .then(res => {
-            //     // this.allAnswers = response.data.data;
-            //     console.log(res, "all Answer");
-            //   })
-            //   .catch(function(error) {
-            //     console.log(error);
-            //   });
+            setTimeout(() => {
+              this.textAnswer = null;
+              this.$emit("getAllAnswerAgain");
+            }, 500);
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
+        .catch(function(error) {});
     }
   }
 };

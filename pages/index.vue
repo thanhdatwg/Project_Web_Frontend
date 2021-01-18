@@ -131,40 +131,31 @@ export default {
       axios
         .get("http://localhost:8000/api/questions?page=1")
         .then(response => {
-          console.log(response.data);
           this.infoQuestions = response.data.data;
           this.prev_link = response.data.links.prev;
           this.next_link = response.data.links.next;
         })
-        .catch(function(error) {
-          console.log(error);
-        });
+        .catch(function(error) {});
     },
     prevData() {
       axios
         .get(this.prev_link)
         .then(response => {
-          // console.log(response.data);
           this.infoQuestions = response.data.data;
           this.prev_link = response.data.links.prev;
           this.next_link = response.data.links.next;
         })
-        .catch(function(error) {
-          console.log(error);
-        });
+        .catch(function(error) {});
     },
     nextData() {
       axios
         .get(this.next_link)
         .then(response => {
-          // console.log(response.data);
           this.infoQuestions = response.data.data;
           this.prev_link = response.data.links.prev;
           this.next_link = response.data.links.next;
         })
-        .catch(function(error) {
-          console.log(error);
-        });
+        .catch(function(error) {});
     }
   }
 };

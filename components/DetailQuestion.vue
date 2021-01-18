@@ -17,9 +17,9 @@
     <v-card-text>
       <v-row no-gutters>
         <v-col class="col-auto" align="center">
-          <v-icon size="55" @click="voteQuestion">mdi-menu-up</v-icon>
+          <v-icon size="55" @click="voteQuestion(1)">mdi-menu-up</v-icon>
           <div class="text-body-1">{{ detailQuestion.votes_count }}</div>
-          <v-icon size="55">mdi-menu-down</v-icon>
+          <v-icon size="55" @click="voteQuestion(-1)">mdi-menu-down</v-icon>
           <div>
             <v-icon
               size="40"
@@ -48,27 +48,28 @@ export default {
     }
   },
   methods: {
-    voteQuestion() {
+    voteQuestion(value) {
       axios
         .post(
           "http://localhost:8000/api/questions/" +
             this.detailQuestion.id +
             "/vote",
-          { vote: 1 },
+          { vote: value },
           {
             headers: {
               Authorization: "Bearer " + Cookie.get("jwt")
             }
           }
         )
-        .then(function(response) {
-          console.log(response);
+        .then(response => {
+          setTimeout(() => {
+            this.$emit("getDetailQuestion");
+          }, 500);
         })
-        .catch(function(error) {
-          console.log(error);
-        });
+        .catch(function(error) {});
     },
     favoriteQuestion() {
+      this.$emit("favorite");
       let axiosConfig = {
         headers: {
           Authorization: "Bearer " + Cookie.get("jwt")
@@ -86,13 +87,8 @@ export default {
             }
           }
         )
-        .then(function(response) {
-          console.log(response);
-          this.$router.reload();
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+        .then(response => {})
+        .catch(function(error) {});
     }
   }
 };

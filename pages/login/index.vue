@@ -59,14 +59,11 @@ export default {
           password: this.password
         })
         .then(response => {
-          console.log(this.$store.state.token);
           if (this.$store.state.token != null) {
             this.$router.push("/");
           } else this.$router.push("/login");
         })
-        .catch(function(error) {
-          console.log(error);
-        });
+        .catch(function(error) {});
     }
   }
 };

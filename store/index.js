@@ -25,7 +25,6 @@ const actions = {
         password: authData.password
       })
       .then(result => {
-        console.log(result, "dataLogin");
         vuexContext.commit("setToken", result.data.access_token);
 
         localStorage.setItem("token", result.data.access_token);
@@ -40,9 +39,7 @@ const actions = {
           new Date().getTime + Number.parseInt(result.data.expires_in) * 1000
         );
       })
-      .catch(e => {
-        console.log(e.response);
-      });
+      .catch(e => {});
   },
   logout(vuexContext) {
     vuexContext.commit("clearToken");
