@@ -3,7 +3,8 @@ import axios from "axios";
 import Cookie from "js-cookie";
 const state = () => ({
   token: null,
-  infoUser: {}
+  infoUser: {},
+  status: {}
 });
 
 const mutations = {
@@ -16,6 +17,9 @@ const mutations = {
   },
   setInfoUser(state, info) {
     state.infoUser = info;
+  },
+  getStatusLogin(state, info) {
+    state.status = info;
   }
 };
 
@@ -52,11 +56,15 @@ const actions = {
           })
           .then(result => {
             // vuexContext.commit("setInfoUser", result.data);
+            // console.log("dkjasdjks");
             localStorage.setItem("infoAcc", result.data);
             Cookie.set("infoAcc", result.data);
           });
       })
-      .catch(e => {});
+      .catch(error => {
+        console.log(error.response);
+        vuexContext.commit("getStatusLogin", error.response);
+      });
   },
   // informationUser(vuexContext) {
 

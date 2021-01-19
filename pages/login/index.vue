@@ -43,6 +43,11 @@
         </v-btn>
       </v-form>
     </v-col>
+    <v-col cols="12" style="margin-top: 200px">
+      <v-alert v-model="isAlert" type="error">
+        Tên đăng nhập hoặc mật khẩu không đúng
+      </v-alert>
+    </v-col>
   </v-row>
 </template>
 
@@ -54,7 +59,8 @@ export default {
       email: "",
       password: null,
       password_errors: [],
-      email_errors: []
+      email_errors: [],
+      isAlert: false
     };
   },
   methods: {
@@ -84,12 +90,18 @@ export default {
           password: this.password
         })
         .then(response => {
-          console.log(response);
           if (this.$store.state.token != null) {
             this.$router.push("/");
           } else this.$router.push("/login");
+
+          if (this.$store.state.status.status == 400) {
+            this.isAlert = true;
+            setTimeout(() => {
+              this.isAlert = false;
+            }, 2000);
+          }
         })
-        .catch(function(error) {});
+        .catch(error => {});
     }
   }
 };
