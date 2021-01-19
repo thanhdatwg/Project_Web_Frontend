@@ -8,6 +8,7 @@
     <allAnswers
       :allAnswers="allAnswers"
       @getDetailAnswer="getAllAnswer"
+      @getAgainAllAnswers="getAllAnswer"
     ></allAnswers>
     <createAnswer
       :detailQuestion="detailQuestion"
@@ -59,7 +60,7 @@ export default {
             "/answers"
         )
         .then(response => {
-          console.log(response);
+          console.log(response, "allAnswers");
           this.allAnswers = response.data.data;
         })
         .catch(function(error) {});
