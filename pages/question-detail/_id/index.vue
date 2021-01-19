@@ -9,6 +9,7 @@
       :allAnswers="allAnswers"
       @getDetailAnswer="getAllAnswer"
       @getAgainAllAnswers="getAllAnswer"
+      @getUpdateAnswer="getAllAnswer"
     ></allAnswers>
     <createAnswer
       :detailQuestion="detailQuestion"
