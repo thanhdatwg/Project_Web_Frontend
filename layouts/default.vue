@@ -15,7 +15,7 @@
           class="d-flex justify-end align-center pr-6"
           v-if="getToken()"
         >
-          <div>{{ getNameAccount() }}</div>
+          <div>{{ nameAccount }}</div>
           <v-menu offset-y transition="slide-y-transition" bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon v-bind="attrs" v-on="on">
@@ -76,7 +76,8 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: "StackOverFlow"
+      title: "StackOverFlow",
+      nameAccount: null
     };
   },
   methods: {
@@ -86,13 +87,12 @@ export default {
     },
     getToken() {
       if (Cookie.get("jwt") != null) {
+        const info = Cookie.get("infoAcc");
+        this.nameAccount = JSON.parse(info).name;
         return true;
       } else return false;
     },
-    getNameAccount() {
-      const info = Cookie.get("infoAcc");
-      return JSON.parse(info).name;
-    }
+    getNameAccount() {}
   }
 };
 </script>

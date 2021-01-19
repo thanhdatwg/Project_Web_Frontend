@@ -211,10 +211,24 @@ export default {
         });
     },
     isValidDelete(infoQuestion) {
-      const info = Cookie.get("infoAcc");
-      if (JSON.parse(info).id == infoQuestion.user.id) {
-        return true;
-      } else return false;
+      // const info = Cookie.get("infoAcc");
+      // if (JSON.parse(info).id == infoQuestion.user.id) {
+      //   return true;
+      // } else return false;
+      // if (Cookie.get("jwt") != null) {
+      //   const info = Cookie.get("infoAcc");
+      //   this.nameAccount = JSON.parse(info).name;
+      //   return true;
+      // } else return false;
+
+      if (Cookie.get("jwt") == undefined) {
+        return false;
+      } else {
+        const info = Cookie.get("infoAcc");
+        if (JSON.parse(info).id == infoQuestion.user.id) {
+          return true;
+        } else return false;
+      }
     },
     getAllQuestions() {
       axios

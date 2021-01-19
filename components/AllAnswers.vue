@@ -186,10 +186,18 @@ export default {
         });
     },
     isValidEdit(infoAnswer) {
-      const info = Cookie.get("infoAcc");
-      if (JSON.parse(info).id == infoAnswer.user.id) {
-        return true;
-      } else return false;
+      // const info = Cookie.get("infoAcc");
+      // if (JSON.parse(info).id == infoAnswer.user.id) {
+      //   return true;
+      // } else return false;
+      if (Cookie.get("jwt") == undefined) {
+        return false;
+      } else {
+        const info = Cookie.get("infoAcc");
+        if (JSON.parse(info).id == infoAnswer.user.id) {
+          return true;
+        } else return false;
+      }
     },
     voteAnswer(value, answer) {
       axios
