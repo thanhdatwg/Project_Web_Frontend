@@ -9,7 +9,7 @@
       ></v-img>
     </v-col>
     <v-col cols="8" align="center" class="mx-auto">
-      <v-form @submit.prevent="createAccount">
+      <v-form @submit.prevent="validate">
         <v-text-field
           v-model="email"
           label="Email"
@@ -17,6 +17,8 @@
           filled
           class="rounded-t-lg"
           placeholder=" "
+          :error-messages="email_errors"
+          @input="email_errors = []"
         ></v-text-field>
         <v-text-field
           v-model="name"
@@ -25,6 +27,8 @@
           filled
           class="rounded-t-lg"
           placeholder=" "
+          :error-messages="name_errors"
+          @input="name_errors = []"
         ></v-text-field>
         <v-text-field
           v-model="password"
@@ -33,6 +37,8 @@
           filled
           class="rounded-t-lg mt-n1"
           placeholder=" "
+          :error-messages="password_errors"
+          @input="password_errors = []"
         ></v-text-field>
         <v-text-field
           v-model="password_confirmation"
@@ -41,6 +47,8 @@
           filled
           class="rounded-t-lg mt-n1"
           placeholder=" "
+          :error-messages="confirmpass_errors"
+          @input="confirmpass_errors = []"
         ></v-text-field>
         <v-btn
           type="submit"
@@ -65,12 +73,48 @@ export default {
   data() {
     return {
       email: "",
+      name: "",
       password: null,
       password_confirmation: null,
-      name: ""
+      email_errors: [],
+      name_errors: [],
+      password_errors: [],
+      confirmpass_errors: []
     };
   },
   methods: {
+    validate() {
+      let hasError = false;
+      if (this.email == "") {
+        hasError = true;
+        this.email_errors = ["Vui lòng nhập Email"];
+      }
+      if (this.name == "") {
+        hasError = true;
+        this.name_errors = ["Vui lòng nhập tên"];
+      }
+
+      if (this.password == null) {
+        hasError = true;
+        this.password_errors = ["Vui lòng nhập mật khẩu"];
+      }
+      if (this.password_confirmation == null) {
+        hasError = true;
+        this.confirmpass_errors = ["Vui lòng nhập lại mật khẩu"];
+      }
+      if (this.password_confirmation != this.password) {
+        hasError = true;
+        this.confirmpass_errors = ["Confirm Password phải trùng với Password"];
+      }
+      if (!hasError) {
+        this.name_errors = [];
+        this.cmnd_errors = [];
+        this.address_errors = [];
+        this.createAccount();
+      }
+
+      return hasError;
+    },
     createAccount() {
       axios
         .post("http://127.0.0.1:8000/api/register", {
@@ -84,8 +128,8 @@ export default {
             this.$router.push("/login");
           }
         })
-        .catch((error) => {
-          console.log(error.response)
+        .catch(error => {
+          console.log(error.response);
         });
     }
   }
