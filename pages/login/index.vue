@@ -8,7 +8,7 @@
         style="border-radius: 6px"
       ></v-img>
     </v-col>
-    <v-col cols="8" align="center" class="mx-auto">
+    <v-col cols="8" class="mx-auto">
       <v-form @submit.prevent="validate">
         <v-alert v-model="isAlert" type="error">
           Tên đăng nhập hoặc mật khẩu không đúng
