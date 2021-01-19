@@ -55,7 +55,7 @@ export default {
     checkAccount() {
       this.$store
         .dispatch("authenticateUser", {
-          username: this.username,
+          email: this.username,
           password: this.password
         })
         .then(response => {

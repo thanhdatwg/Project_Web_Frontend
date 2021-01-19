@@ -59,6 +59,7 @@ export default {
             "/answers"
         )
         .then(response => {
+          console.log(response);
           this.allAnswers = response.data.data;
         })
         .catch(function(error) {});

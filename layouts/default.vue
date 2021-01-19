@@ -4,7 +4,11 @@
       <v-row no-gutters>
         <v-spacer></v-spacer>
         <v-col cols="3" class="d-flex align-center pl-2">
-          <v-toolbar-title v-text="title" />
+          <v-toolbar-title
+            @click="$router.push('/')"
+            v-text="title"
+            style="cursor: pointer;"
+          />
         </v-col>
         <v-col
           cols="8"
@@ -26,6 +30,14 @@
                   >Profile</v-list-item-title
                 >
               </v-list-item>
+              <v-list-item>
+                <v-list-item-title
+                  @click="$router.push('/my-post')"
+                  style="cursor: pointer;"
+                  >MyPost</v-list-item-title
+                >
+              </v-list-item>
+
               <v-list-item>
                 <v-list-item-title @click="onLogout" style="cursor: pointer;"
                   >Sign out</v-list-item-title

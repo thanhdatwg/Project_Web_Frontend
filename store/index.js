@@ -25,7 +25,7 @@ const actions = {
 
     return axios
       .post(authUrl, {
-        username: authData.username,
+        email: authData.email,
         password: authData.password
       })
       .then(result => {
