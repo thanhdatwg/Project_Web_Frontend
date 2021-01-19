@@ -33,6 +33,8 @@
                 outlined 
                 value="{name}"
                 v-model="name"
+                :error-messages="name_errors"
+                @input="name_errors = []"
               ></v-text-field>
             </v-row>
             <v-row no-gutters>
@@ -42,6 +44,8 @@
                 type="password"
                 placeholder=""
                 outlined
+                :error-messages="old_password_errors"
+                @input="old_password_errors = []"
               ></v-text-field>
             </v-row>
             <v-row no-gutters>
@@ -51,6 +55,8 @@
                 type="password"
                 placeholder=""
                 outlined
+                :error-messages="password_errors"
+                @input="password_errors = []"
               ></v-text-field>
             </v-row>
             <v-row no-gutters>
@@ -60,6 +66,8 @@
                 type="password"
                 placeholder=""
                 outlined
+                :error-messages="confirmpass_errors"
+                @input="confirmpass_errors = []"
               ></v-text-field>
             </v-row>
             <v-row no-gutters class="d-flex justify-center">
@@ -92,7 +100,11 @@ export default {
       old_password: null,
       password: null,
       password_confirmation: null,
-      avatar: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
+      avatar: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
+      name_errors: [],
+      old_password_errors: [],
+      password_errors: [],
+      confirmpass_errors: [],
     };
   },
   mounted() {
@@ -120,7 +132,19 @@ export default {
           }
         })
         .catch((error) => {
-          console.log(error.response)
+          console.log(error.response);
+          let validate = error.response.data.errors;
+          if(error.response.status === 422){
+            if(typeof validate.name !== 'undefined' || validate.name != null){
+              this.name_errors = validate.name[0];
+            }
+            if(typeof validate.old_password !== 'undefined' || validate.old_password != null){
+              this.old_password_errors = validate.old_password[0];
+            }
+            if(typeof validate.password !== 'undefined' || validate.password != null){
+              this.password_errors = validate.password[0];
+            }
+          }
         });
     },
     getCurrentUser(){

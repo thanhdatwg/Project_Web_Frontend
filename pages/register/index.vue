@@ -8,7 +8,10 @@
         style="border-radius: 6px"
       ></v-img>
     </v-col>
-    <v-col cols="8" align="center" class="mx-auto">
+    <v-col cols="8" class="mx-auto">
+      <v-alert v-model="isAlert" type="error">
+        Email already exists
+      </v-alert>
       <v-form @submit.prevent="validate">
         <v-text-field
           v-model="email"
@@ -63,11 +66,6 @@
         </v-btn>
       </v-form>
     </v-col>
-    <v-col cols="12">
-      <v-alert v-model="isAlert" type="error">
-        Email already exists
-      </v-alert>
-    </v-col>
   </v-row>
 </template>
 
@@ -91,27 +89,27 @@ export default {
   methods: {
     validate() {
       let hasError = false;
-      if (this.email == "") {
-        hasError = true;
-        this.email_errors = ["Vui lòng nhập Email"];
-      }
-      if (this.name == "") {
-        hasError = true;
-        this.name_errors = ["Vui lòng nhập tên"];
-      }
+      // if (this.email == "") {
+      //   hasError = true;
+      //   this.email_errors = ["Vui lòng nhập Email"];
+      // }
+      // if (this.name == "") {
+      //   hasError = true;
+      //   this.name_errors = ["Vui lòng nhập tên"];
+      // }
 
-      if (this.password == null) {
-        hasError = true;
-        this.password_errors = ["Vui lòng nhập mật khẩu"];
-      }
-      if (this.password_confirmation == null) {
-        hasError = true;
-        this.confirmpass_errors = ["Vui lòng nhập lại mật khẩu"];
-      }
-      if (this.password_confirmation != this.password) {
-        hasError = true;
-        this.confirmpass_errors = ["Confirm Password phải trùng với Password"];
-      }
+      // if (this.password == null) {
+      //   hasError = true;
+      //   this.password_errors = ["Vui lòng nhập mật khẩu"];
+      // }
+      // if (this.password_confirmation == null) {
+      //   hasError = true;
+      //   this.confirmpass_errors = ["Vui lòng nhập lại mật khẩu"];
+      // }
+      // if (this.password_confirmation != this.password) {
+      //   hasError = true;
+      //   this.confirmpass_errors = ["Confirm Password phải trùng với Password"];
+      // }
       if (!hasError) {
         this.email_errors = [];
         this.name_errors = [];
@@ -132,17 +130,27 @@ export default {
         })
         .then(response => {
           // console.log(response);
-          if (response.status == 201) {
+          if (response.status == 200) {
             this.$router.push("/login");
           }
         })
         .catch(error => {
-          console.log(error.response);
+          console.log(error.response.data);
+          let validate = error.response.data.errors;
           if (error.response.status == 422) {
-            this.isAlert = true;
-            setTimeout(() => {
-              this.isAlert = false;
-            }, 2000);
+            if(typeof validate.email !== 'undefined' || validate.email != null){
+              this.email_errors = validate.email[0];
+            }
+            if(typeof validate.password !== 'undefined'){
+              this.password_errors = validate.password[0];
+            }
+            if(typeof validate.name !== 'undefined'){
+              this.name_errors = validate.name[0];
+            }
+            // this.isAlert = true;
+            // setTimeout(() => {
+            //   this.isAlert = false;
+            // }, 5000);
           }
         });
     }
