@@ -30,47 +30,13 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item style="max-height: 620px; overflow-y: auto;">
-        <div v-for="(item, index) in allData" :key="index">
-          <v-hover v-slot="{ hover }">
-            <v-card
-              max-width="800"
-              :elevation="hover ? 10 : 0"
-              class="mt-4 container"
-              style="background-color: rgb(167 171 175 / 70%)"
-            >
-              <v-card-text>
-                <v-row no-gutters>
-                  <v-col cols="7" class="mt-n2">
-                    <h2 class="font-weight-medium black--text">
-                      Title: {{ item.title }}
-                    </h2>
-                  </v-col>
-                  <v-spacer></v-spacer>
-                  <v-col cols="4" class="d-flex justify-end mt-n2">
-                    <div class="font-weight-medium black--text">
-                      Time: {{ item.created_at }}
-                    </div>
-                  </v-col>
-                  <v-col cols="12" class="mt-2">
-                    <div class="font-weight-medium">
-                      Total Votes: {{ item.vote_count }}
-                    </div>
-                  </v-col>
-                </v-row>
-              </v-card-text>
-            </v-card>
-          </v-hover>
-        </div>
+        <MyPost :allData="allData"></MyPost>
       </v-tab-item>
-      <v-tab-item>
-        <v-card flat>
-          <v-card-text>oi21jeijdas</v-card-text>
-        </v-card>
+      <v-tab-item style="max-height: 620px; overflow-y: auto;">
+        <MyPost :allData="allQuestions"></MyPost>
       </v-tab-item>
-      <v-tab-item>
-        <v-card flat>
-          <v-card-text>sadjklaj</v-card-text>
-        </v-card>
+      <v-tab-item style="max-height: 620px; overflow-y: auto;">
+        <MyPost :allData="allAnswers"></MyPost>
       </v-tab-item>
     </v-tabs-items>
   </v-card>
@@ -84,7 +50,9 @@ export default {
     return {
       tab: null,
       text: "dsahjdjhas",
-      allData: []
+      allData: [],
+      allQuestions: [],
+      allAnswers: []
     };
   },
   mounted() {
@@ -97,6 +65,10 @@ export default {
       .then(response => {
         this.allData = response.data.data;
         console.log(this.allData);
+        this.allQuestions = this.allData.filter(e => e.type == "A");
+        console.log(this.allQuestions);
+        this.allAnswers = this.allData.filter(e => e.type == "Q");
+        console.log(this.allAnswers);
       })
       .catch(function(error) {});
   }
