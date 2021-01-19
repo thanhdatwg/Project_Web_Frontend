@@ -59,6 +59,7 @@ export default {
           password: this.password
         })
         .then(response => {
+          console.log(response);
           if (this.$store.state.token != null) {
             this.$router.push("/");
           } else this.$router.push("/login");
