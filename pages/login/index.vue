@@ -10,6 +10,9 @@
     </v-col>
     <v-col cols="8" align="center" class="mx-auto">
       <v-form @submit.prevent="validate">
+        <v-alert v-model="isAlert" type="error">
+          Tên đăng nhập hoặc mật khẩu không đúng
+        </v-alert>
         <v-text-field
           label="Email"
           type="text"
@@ -42,11 +45,6 @@
           </v-row>
         </v-btn>
       </v-form>
-    </v-col>
-    <v-col cols="12" style="margin-top: 200px">
-      <v-alert v-model="isAlert" type="error">
-        Tên đăng nhập hoặc mật khẩu không đúng
-      </v-alert>
     </v-col>
   </v-row>
 </template>
@@ -98,7 +96,7 @@ export default {
             this.isAlert = true;
             setTimeout(() => {
               this.isAlert = false;
-            }, 2000);
+            }, 5000);
           }
         })
         .catch(error => {});
