@@ -9,14 +9,16 @@
       ></v-img>
     </v-col>
     <v-col cols="8" align="center" class="mx-auto">
-      <v-form @submit.prevent="checkAccount">
+      <v-form @submit.prevent="validate">
         <v-text-field
           label="Email"
           type="text"
-          v-model="username"
+          v-model="email"
           filled
           class="rounded-t-lg"
           placeholder=" "
+          :error-messages="email_errors"
+          @input="email_errors = []"
         ></v-text-field>
         <v-text-field
           label="Password"
@@ -25,6 +27,8 @@
           filled
           class="rounded-t-lg mt-n1"
           placeholder=" "
+          :error-messages="password_errors"
+          @input="password_errors = []"
         ></v-text-field>
         <v-btn
           type="submit"
@@ -47,15 +51,36 @@ export default {
   layout: "login",
   data() {
     return {
-      username: "",
-      password: ""
+      email: "",
+      password: null,
+      password_errors: [],
+      email_errors: []
     };
   },
   methods: {
+    validate() {
+      let hasError = false;
+      if (this.email == "") {
+        hasError = true;
+        this.email_errors = ["Vui lòng nhập Email"];
+      }
+      if (this.password == null) {
+        hasError = true;
+        this.password_errors = ["Vui lòng nhập mật khẩu"];
+      }
+
+      if (!hasError) {
+        this.email_errors = [];
+        this.password_errors = [];
+        this.checkAccount();
+      }
+
+      return hasError;
+    },
     checkAccount() {
       this.$store
         .dispatch("authenticateUser", {
-          email: this.username,
+          email: this.email,
           password: this.password
         })
         .then(response => {

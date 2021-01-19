@@ -63,6 +63,11 @@
         </v-btn>
       </v-form>
     </v-col>
+    <v-col cols="12">
+      <v-alert v-model="isAlert" type="error">
+        Email already exists
+      </v-alert>
+    </v-col>
   </v-row>
 </template>
 
@@ -79,7 +84,8 @@ export default {
       email_errors: [],
       name_errors: [],
       password_errors: [],
-      confirmpass_errors: []
+      confirmpass_errors: [],
+      isAlert: false
     };
   },
   methods: {
@@ -107,9 +113,10 @@ export default {
         this.confirmpass_errors = ["Confirm Password phải trùng với Password"];
       }
       if (!hasError) {
+        this.email_errors = [];
         this.name_errors = [];
-        this.cmnd_errors = [];
-        this.address_errors = [];
+        this.password_errors = [];
+        this.confirmpass_errors = [];
         this.createAccount();
       }
 
@@ -124,12 +131,19 @@ export default {
           name: this.name
         })
         .then(response => {
+          // console.log(response);
           if (response.status == 201) {
             this.$router.push("/login");
           }
         })
         .catch(error => {
           console.log(error.response);
+          if (error.response.status == 422) {
+            this.isAlert = true;
+            setTimeout(() => {
+              this.isAlert = false;
+            }, 2000);
+          }
         });
     }
   }
