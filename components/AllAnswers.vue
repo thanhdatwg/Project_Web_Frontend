@@ -280,7 +280,7 @@ export default {
       } else {
         const token = Cookie.get("jwt")
         axios
-          .post("http://localhost:8000/api/answers/" + answer.id + "/accept", {
+          .post("http://localhost:8000/api/answers/" + answer.id + "/accept", [],{
             headers: {
               Accept: 'application/json',
               Authorization: `Bearer ${token}`,
