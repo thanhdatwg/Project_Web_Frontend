@@ -31,13 +31,13 @@
             align="center"
           >
             <v-col class="col-auto" align="center">
-              <v-icon size="40" @click="voteAnswer(1, answer)" color="primary"
+              <v-icon size="40" @click="voteAnswer(1, answer)" color="primary" title="This answer is useful"
                 >mdi-menu-up</v-icon
               >
               <div class="text-body-1 font-weight-medium black--text">
                 {{ answer.votes_count }}
               </div>
-              <v-icon size="40" @click="voteAnswer(-1, answer)" color="primary"
+              <v-icon size="40" @click="voteAnswer(-1, answer)" color="primary" title="This answer is not useful"
                 >mdi-menu-down</v-icon
               >
               <br />
@@ -277,10 +277,10 @@ export default {
     acceptAnswer(answer) {
       if (Cookie.get("jwt") == undefined) {
         this.$emit("openAlertVote");
-      } else {
+      } else if(!answer.is_best){
         const token = Cookie.get("jwt")
         axios
-          .post("http://localhost:8000/api/answers/" + answer.id + "/accept", [],{
+          .post("http://localhost:8000/api/answers/" + answer.id + "/accept", {},{
             headers: {
               Accept: 'application/json',
               Authorization: `Bearer ${token}`,
@@ -294,6 +294,8 @@ export default {
           })
           .catch(function (error) {});
         console.log(this.allAnswers);
+      }else{
+        this.$emit("alertWarning");
       }
     },
   },

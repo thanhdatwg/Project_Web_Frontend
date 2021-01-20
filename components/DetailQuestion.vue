@@ -24,6 +24,7 @@
             color="primary"
             elevation="1"
             @click="voteQuestion(1)"
+            title="This question is useful"
           >
             <v-icon large color="white">mdi-menu-up</v-icon>
           </v-btn>
@@ -40,6 +41,7 @@
             color="primary"
             elevation="1"
             @click="voteQuestion(-1)"
+            title="This question is not useful"
           >
             <v-icon large color="white" class="pt-1">mdi-menu-down</v-icon>
           </v-btn>
@@ -93,6 +95,7 @@ export default {
             }
           )
           .then(response => {
+            this.$emit("alertFeedback");
             setTimeout(() => {
               this.$emit("getDetailQuestion");
             }, 500);
