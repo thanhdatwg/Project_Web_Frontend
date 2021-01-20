@@ -41,7 +41,13 @@
                 >mdi-menu-down</v-icon
               >
               <br />
-              <v-icon size="28">mdi-check-outline</v-icon>
+              <v-icon
+                size="28"
+                :style="answer.is_best ? `color: green` : false"
+                @click="acceptAnswer(answer)"
+                v-if="isValidAccept(answer)"
+                >mdi-check-bold</v-icon
+              >
             </v-col>
             <v-col cols="8" class="ml-4 mt-n4" v-html="answer.body"></v-col>
             <v-spacer></v-spacer>
@@ -87,7 +93,7 @@
       transition="dialog-bottom-transition"
     >
       <v-card>
-        <v-card-title class="headline red accent-3 justify-center ">
+        <v-card-title class="headline red accent-3 justify-center">
           Delete Answer
         </v-card-title>
         <v-card-text
@@ -98,9 +104,7 @@
         <v-divider class="mt-n2"></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="dialog = false">
-            Cancel
-          </v-btn>
+          <v-btn color="primary" text @click="dialog = false"> Cancel </v-btn>
           <v-btn color="red darken-4" text @click="deleteAnswer()"
             >Accept</v-btn
           >
@@ -147,8 +151,12 @@ export default {
   props: {
     allAnswers: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
+    detailQuestion: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {
@@ -156,7 +164,7 @@ export default {
       questionId: null,
       answerId: null,
       dialogEdit: false,
-      bodyAnswer: null
+      bodyAnswer: null,
     };
   },
 
@@ -169,15 +177,15 @@ export default {
             "/answers/" +
             this.answerId,
           {
-            body: this.bodyAnswer
+            body: this.bodyAnswer,
           },
           {
             headers: {
-              Authorization: "Bearer " + Cookie.get("jwt")
-            }
+              Authorization: "Bearer " + Cookie.get("jwt"),
+            },
           }
         )
-        .then(response => {
+        .then((response) => {
           if (response.status == 200) {
             this.dialogEdit = false;
             this.$emit("getUpdateAnswer");
@@ -204,17 +212,30 @@ export default {
             this.answerId,
           {
             headers: {
-              Authorization: "Bearer " + Cookie.get("jwt")
-            }
+              Authorization: "Bearer " + Cookie.get("jwt"),
+            },
           }
         )
-        .then(response => {
+        .then((response) => {
           if (response.status == 200) {
             this.dialog = false;
             this.$emit("getAgainAllAnswers");
           }
         });
     },
+    isValidAccept(answer) {
+      // console.log(this.detailQuestion);
+      if (Cookie.get("jwt") == undefined) {
+        if (answer.is_best) return true;
+        return false;
+      } else {
+        const info = Cookie.get("infoAcc");
+        if (JSON.parse(info).id == this.detailQuestion.user.id) {
+          return true;
+        } else return false;
+      }
+    },
+
     isValidEdit(infoAnswer) {
       // const info = Cookie.get("infoAcc");
       // if (JSON.parse(info).id == infoAnswer.user.id) {
@@ -239,20 +260,43 @@ export default {
             { vote: value },
             {
               headers: {
-                Authorization: "Bearer " + Cookie.get("jwt")
-              }
+                Authorization: "Bearer " + Cookie.get("jwt"),
+              },
             }
           )
-          .then(response => {
+          .then((response) => {
+            this.$emit("alertFeedback");
             setTimeout(() => {
               this.$emit("getDetailAnswer");
             }, 500);
           })
-          .catch(function(error) {});
+          .catch(function (error) {});
         // console.log(this.allAnswers);
       }
-    }
-  }
+    },
+    acceptAnswer(answer) {
+      if (Cookie.get("jwt") == undefined) {
+        this.$emit("openAlertVote");
+      } else {
+        const token = Cookie.get("jwt")
+        axios
+          .post("http://localhost:8000/api/answers/" + answer.id + "/accept", {
+            headers: {
+              Accept: 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((response) => {
+            this.$emit("alertFeedback");
+            setTimeout(() => {
+              this.$emit("getDetailAnswer");
+            }, 500);
+          })
+          .catch(function (error) {});
+        console.log(this.allAnswers);
+      }
+    },
+  },
 };
 </script>
 

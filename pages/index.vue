@@ -65,9 +65,9 @@
                   cols="1"
                   align="center"
                   :style="
-                    infoQuestion.status === 'answered'
+                    infoQuestion.status === 'answered-accepted'
                       ? `background-color: #38c172; color: white;`
-                      : infoQuestion.answers_count > 0
+                      : infoQuestion.status == 'answered'
                       ? `border: 1px solid #38c172; color: #38c172`
                       : false
                   "

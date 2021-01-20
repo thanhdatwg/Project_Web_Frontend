@@ -1,6 +1,7 @@
 <template>
   <div>
     <alertNotification :alertAskQuestion="alertAskQuestion"></alertNotification>
+    <alertSuccess :alertFeedback="alertFeedback"></alertSuccess>
     <detailQuestion
       :detailQuestion="detailQuestion"
       @favorite="favorite"
@@ -10,10 +11,12 @@
     ></detailQuestion>
     <allAnswers
       :allAnswers="allAnswers"
+      :detailQuestion="detailQuestion"
       @getDetailAnswer="getAllAnswer"
       @getAgainAllAnswers="getAllAnswer"
       @getUpdateAnswer="getAllAnswer"
       @openAlertVote="openAlert"
+      @alertFeedback="openAlertSuccess"
     ></allAnswers>
     <createAnswer
       :detailQuestion="detailQuestion"
@@ -29,19 +32,22 @@ import detailQuestion from "~/components/DetailQuestion.vue";
 import allAnswers from "~/components/AllAnswers.vue";
 import createAnswer from "~/components/CreateAnswer.vue";
 import alertNotification from "~/components/alertNotification.vue";
+import alertSuccess from "~/components/alertSuccess.vue";
 export default {
   components: {
     detailQuestion,
     allAnswers,
     createAnswer,
-    alertNotification
+    alertNotification,
+    alertSuccess
   },
   data() {
     return {
       detailQuestion: {},
       allAnswers: [],
       favoritesCount: null,
-      alertAskQuestion: false
+      alertAskQuestion: false,
+      alertFeedback: false
     };
   },
   mounted() {
@@ -55,6 +61,12 @@ export default {
       this.alertAskQuestion = true;
       setTimeout(() => {
         this.alertAskQuestion = false;
+      }, 4000);
+    },
+    openAlertSuccess() {
+      this.alertFeedback = true;
+      setTimeout(() => {
+        this.alertFeedback = false;
       }, 4000);
     },
     getDetailQuestion() {
