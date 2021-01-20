@@ -225,8 +225,9 @@ export default {
     },
     isValidAccept(answer) {
       // console.log(this.detailQuestion);
-      if (Cookie.get("jwt") == undefined) {
-        if (answer.is_best) return true;
+      if (answer.is_best){
+        return true;
+      }else if (Cookie.get("jwt") == undefined) {
         return false;
       } else {
         const info = Cookie.get("infoAcc");

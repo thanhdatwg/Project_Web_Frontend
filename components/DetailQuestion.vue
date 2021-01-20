@@ -104,6 +104,9 @@ export default {
       }
     },
     favoriteQuestion() {
+      // if (Cookie.get("jwt") == undefined) {
+      this.$emit("openAlert");
+      // }
       this.$emit("favorite");
       let axiosConfig = {
         headers: {
@@ -123,7 +126,9 @@ export default {
           }
         )
         .then(response => {})
-        .catch(function(error) {});
+        .catch(function(error) {
+          console.log(error.response)
+        });
     }
   }
 };
