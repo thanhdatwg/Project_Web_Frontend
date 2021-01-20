@@ -1,7 +1,7 @@
 <template>
   <v-card class="mt-5">
     <v-card-title class="elevation-1">
-      <div>Ask a public question</div>
+      <div>Edit Question</div>
       <v-spacer></v-spacer>
       <v-btn color="cyan" depressed to="/">Back to all Questions</v-btn>
     </v-card-title>

@@ -2,7 +2,9 @@
   <div>
     <v-card class="mt-2">
       <v-toolbar color="cyan" dark flat>
-        <v-toolbar-title>Top Questions</v-toolbar-title>
+        <v-toolbar-title class="font-weight-bold"
+          >Top Questions</v-toolbar-title
+        >
         <v-spacer></v-spacer>
         <v-text-field label="Search" outlined dense class="mt-5">
           <v-icon>mdi-magnify</v-icon></v-text-field
@@ -12,7 +14,12 @@
         </v-btn>
         <v-spacer></v-spacer>
 
-        <v-btn color="white" outlined to="/create">
+        <v-btn
+          color="white"
+          outlined
+          to="/create"
+          style="border: 1px solid #4E342E"
+        >
           Ask Question
         </v-btn>
 
@@ -89,9 +96,14 @@
                   </div>
                 </v-col>
                 <v-col class="d-flex justify-center" cols="2">
-                  <v-icon
+                  <v-btn
+                    class="mr-2"
+                    small
+                    fab
+                    dark
+                    color="primary"
+                    elevation="3"
                     v-if="isValidDelete(infoQuestion)"
-                    class="mr-1"
                     @click="
                       $router.push(
                         '/question-detail/' +
@@ -99,23 +111,31 @@
                           '/edit-question'
                       )
                     "
-                    >mdi-pencil-outline</v-icon
                   >
-                  <v-icon
-                    v-if="isValidDelete(infoQuestion)"
+                    <v-icon small>mdi-pencil-outline</v-icon>
+                  </v-btn>
+                  <v-btn
                     class="ml-1"
+                    small
+                    fab
+                    dark
+                    color="error"
+                    elevation="3"
+                    v-if="isValidDelete(infoQuestion)"
                     @click="openDialog(infoQuestion)"
-                    >mdi-trash-can-outline</v-icon
                   >
+                    <v-icon small>mdi-trash-can-outline</v-icon>
+                  </v-btn>
                 </v-col>
               </v-row>
               <v-row no-gutters>
-                <v-col cols="12" class="d-flex justify-end"
-                  >Asked by
-                  <span class="text-body-1 black--text ml-1 mr-1">
+                <v-spacer></v-spacer>
+                <v-col cols="4" class="d-flex justify-end pt-1 mr-6">
+                  <span class="text-body-1 black--text">
                     {{ infoQuestion.user.name }}
                   </span>
-                  {{ infoQuestion.created_date }}</v-col
+                  <span class="mx-1">-</span>
+                  <span>{{ infoQuestion.created_date }}</span></v-col
                 >
               </v-row>
             </v-card-text>
@@ -123,12 +143,15 @@
           </v-card>
         </v-tab-item>
       </v-tabs-items>
-      <v-card-actions style="border: 1px solid orange" class="justify-center">
-        <v-btn @click="prevData" color="primary"
-          ><v-icon>mdi-arrow-left</v-icon></v-btn
+      <v-card-actions
+        style="border-top: 1px solid rgb(173 166 166)"
+        class="justify-center"
+      >
+        <v-btn @click="prevData" color="primary" small
+          ><v-icon small>mdi-arrow-left</v-icon></v-btn
         >
-        <v-btn @click="nextData" color="primary"
-          ><v-icon>mdi-arrow-right</v-icon></v-btn
+        <v-btn @click="nextData" color="primary" small
+          ><v-icon small>mdi-arrow-right</v-icon></v-btn
         >
       </v-card-actions>
     </v-card>
@@ -179,15 +202,8 @@ export default {
   },
   mounted() {
     this.getAllQuestions();
-    // this.getInfoUser();
   },
   methods: {
-    // getInfoUser() {
-    //   this.$store.dispatch("informationUser").then(response => {
-    //     const info = Cookie.get("infoAcc");
-    //     console.log(JSON.parse(info));
-    //   });
-    // },
     openDialog(infoQuestion) {
       (this.dialog = true), (this.idQuestionDelete = infoQuestion.id);
     },
@@ -211,16 +227,6 @@ export default {
         });
     },
     isValidDelete(infoQuestion) {
-      // const info = Cookie.get("infoAcc");
-      // if (JSON.parse(info).id == infoQuestion.user.id) {
-      //   return true;
-      // } else return false;
-      // if (Cookie.get("jwt") != null) {
-      //   const info = Cookie.get("infoAcc");
-      //   this.nameAccount = JSON.parse(info).name;
-      //   return true;
-      // } else return false;
-
       if (Cookie.get("jwt") == undefined) {
         return false;
       } else {

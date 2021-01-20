@@ -22,7 +22,7 @@
                 <v-icon>mdi-menu-down</v-icon>
               </v-btn>
             </template>
-            <v-list>
+            <v-list style="width: 125px">
               <v-list-item>
                 <v-list-item-title
                   @click="$router.push('/profile')"

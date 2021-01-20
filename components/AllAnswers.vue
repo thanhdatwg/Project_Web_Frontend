@@ -1,54 +1,65 @@
 <template>
   <div>
     <v-card class="mt-5">
-      <v-card-title class="elevation-1">
+      <v-app-bar
+        absolute
+        color="cyan"
+        elevate-on-scroll
+        scroll-target="#scrolling-techniques-7"
+      >
         <v-row no-gutters>
-          <v-col class="col-auto ml-5">
-            <div>
+          <v-col class="col-auto ml-4">
+            <div class="black--text" style="font-size: 20px">
               {{ this.allAnswers.length }}
               {{ this.allAnswers.length > 1 ? "Answers" : "Answer" }}
             </div>
           </v-col>
           <v-spacer></v-spacer>
         </v-row>
-      </v-card-title>
+      </v-app-bar>
       <v-divider></v-divider>
-      <v-card-text>
-        <v-row
-          v-for="(answer, index) in allAnswers"
-          :key="index"
-          no-gutters
-          align="center"
-        >
-          <v-col
-            v-if="isValidEdit(answer)"
-            cols="12"
-            class="d-flex justify-end"
+      <v-sheet
+        id="scrolling-techniques-7"
+        class="overflow-y-auto mt-14"
+        max-height="400"
+      >
+        <v-card-text>
+          <v-row
+            v-for="(answer, index) in allAnswers"
+            :key="index"
+            no-gutters
+            align="center"
           >
-            <v-icon class="mr-1" @click="openDialogEdit(answer)"
-              >mdi-pencil-outline</v-icon
+            <v-col
+              v-if="isValidEdit(answer)"
+              cols="12"
+              class="d-flex justify-end"
             >
-            <v-icon class="ml-1" @click="openDialog(answer)"
-              >mdi-trash-can-outline</v-icon
-            >
-          </v-col>
-          <v-col class="col-auto" align="center">
-            <v-icon size="55" @click="voteAnswer(1, answer)" color="primary"
-              >mdi-menu-up</v-icon
-            >
-            <div class="text-body-1 font-weight-medium black--text">
-              {{ answer.votes_count }}
-            </div>
-            <v-icon size="55" @click="voteAnswer(-1, answer)" color="primary"
-              >mdi-menu-down</v-icon
-            >
-          </v-col>
-          <v-col cols="10" class="ml-4" v-html="answer.body"></v-col>
-          <v-col cols="12">
-            <v-divider></v-divider>
-          </v-col>
-        </v-row>
-      </v-card-text>
+              <v-icon class="mr-1" @click="openDialogEdit(answer)"
+                >mdi-pencil-outline</v-icon
+              >
+              <v-icon class="ml-1" @click="openDialog(answer)"
+                >mdi-trash-can-outline</v-icon
+              >
+            </v-col>
+            <v-col class="col-auto" align="center">
+              <v-icon size="40" @click="voteAnswer(1, answer)" color="primary"
+                >mdi-menu-up</v-icon
+              >
+              <div class="text-body-1 font-weight-medium black--text">
+                {{ answer.votes_count }}
+              </div>
+              <v-icon size="40" @click="voteAnswer(-1, answer)" color="primary"
+                >mdi-menu-down</v-icon
+              >
+            </v-col>
+            <v-col cols="10" class="ml-4 mt-3" v-html="answer.body"></v-col>
+            <v-col cols="12">
+              <v-divider></v-divider>
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-sheet>
     </v-card>
 
     <v-dialog

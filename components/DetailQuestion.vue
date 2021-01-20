@@ -17,16 +17,33 @@
     <v-card-text>
       <v-row no-gutters>
         <v-col class="col-auto" align="center">
-          <v-icon size="55" @click="voteQuestion(1)" color="primary"
-            >mdi-menu-up</v-icon
+          <v-btn
+            x-small
+            fab
+            dark
+            color="primary"
+            elevation="1"
+            @click="voteQuestion(1)"
           >
-          <div class="text-body-1 font-weight-medium black--text">
+            <v-icon large color="white">mdi-menu-up</v-icon>
+          </v-btn>
+          <div
+            class="font-weight-medium black--text my-2"
+            style="font-size: 18px"
+          >
             {{ detailQuestion.votes_count }}
           </div>
-          <v-icon size="55" @click="voteQuestion(-1)" color="primary"
-            >mdi-menu-down</v-icon
+          <v-btn
+            x-small
+            fab
+            datk
+            color="primary"
+            elevation="1"
+            @click="voteQuestion(-1)"
           >
-          <div>
+            <v-icon large color="white" class="pt-1">mdi-menu-down</v-icon>
+          </v-btn>
+          <div class="mt-4">
             <v-icon
               size="40"
               :color="detailQuestion.is_favorited ? 'orange' : 'grey'"
@@ -36,8 +53,8 @@
           </div>
           <div class="text-body-1">{{ detailQuestion.favorites_count }}</div>
         </v-col>
-        <v-col cols="10" class="mt-4 ml-4" v-html="detailQuestion.body">
-        </v-col>
+        <v-spacer></v-spacer>
+        <v-col cols="11" v-html="detailQuestion.body"> </v-col>
       </v-row>
     </v-card-text>
   </v-card>
