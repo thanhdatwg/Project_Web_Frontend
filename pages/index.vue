@@ -64,9 +64,10 @@
                   cols="1"
                   align="center"
                   :style="
-                    infoQuestion.answers_count >= 10
-                      ? `border: 1px solid green`
-                      : false
+                    infoQuestion.status === 'answered' ? `background-color: #38c172; color: white;` : 
+                    (infoQuestion.answers_count > 0
+                      ? `border: 1px solid #38c172; color: #38c172`
+                      : false)
                   "
                 >
                   <div>{{ infoQuestion.answers_count }}</div>
@@ -77,7 +78,7 @@
                   cols="1"
                   align="center"
                   :style="
-                    infoQuestion.views >= 10 ? `border: 1px solid green` : false
+                    infoQuestion.views >= 10 ? `border: 1px solid orange; color: orange` : false
                   "
                 >
                   <div>{{ infoQuestion.views }}</div>

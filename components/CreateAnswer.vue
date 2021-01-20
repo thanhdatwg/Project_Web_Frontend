@@ -3,7 +3,7 @@
     <v-card-title class="elevation-1">
       <v-row no-gutters>
         <v-col class="col-auto">
-          <div>Your Question</div>
+          <div>Your Answer</div>
         </v-col>
         <v-spacer></v-spacer>
       </v-row>
