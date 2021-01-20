@@ -54,7 +54,7 @@
           <div class="text-body-1">{{ detailQuestion.favorites_count }}</div>
         </v-col>
         <v-spacer></v-spacer>
-        <v-col cols="11" v-html="detailQuestion.body"> </v-col>
+        <v-col cols="11" class="mt-1" v-html="detailQuestion.body"> </v-col>
       </v-row>
     </v-card-text>
   </v-card>

@@ -1,5 +1,16 @@
 <template>
   <div>
+    <v-alert
+      v-model="alertAskQuestion"
+      color="brown lighten-2"
+      dark
+      icon="mdi-alert-outline"
+      transition="scale-transition"
+      max-width="420"
+      style="z-index: 2; position: absolute;bottom: -2px;left: 10px;"
+      >Please login to ask question !!</v-alert
+    >
+
     <v-card class="mt-2">
       <v-toolbar color="cyan" dark flat>
         <v-toolbar-title class="font-weight-bold"
@@ -17,8 +28,8 @@
         <v-btn
           color="white"
           outlined
-          to="/create"
-          style="border: 1px solid #4E342E"
+          @click="askQuestion"
+          style="border: 1px solid rgb(72 75 80)"
         >
           Ask Question
         </v-btn>
@@ -198,7 +209,8 @@ export default {
       prev_link: null,
       next_link: null,
       dialog: false,
-      idQuestionDelete: null
+      idQuestionDelete: null,
+      alertAskQuestion: false
     };
   },
   mounted() {
@@ -267,6 +279,14 @@ export default {
           this.next_link = response.data.links.next;
         })
         .catch(function(error) {});
+    },
+    askQuestion() {
+      if (Cookie.get("jwt") == undefined) {
+        this.alertAskQuestion = true;
+        setTimeout(() => {
+          this.alertAskQuestion = false;
+        }, 4000);
+      } else this.$router.push("/create");
     }
   }
 };

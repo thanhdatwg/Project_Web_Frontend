@@ -34,7 +34,7 @@
     </v-card-text>
     <v-card-actions class="mt-n4 ml-2">
       <v-btn depressed color="primary" @click="editQuestion">
-        Edit your question
+        Update Question
       </v-btn>
     </v-card-actions>
   </v-card>

@@ -30,18 +30,6 @@
             no-gutters
             align="center"
           >
-            <v-col
-              v-if="isValidEdit(answer)"
-              cols="12"
-              class="d-flex justify-end"
-            >
-              <v-icon class="mr-1" @click="openDialogEdit(answer)"
-                >mdi-pencil-outline</v-icon
-              >
-              <v-icon class="ml-1" @click="openDialog(answer)"
-                >mdi-trash-can-outline</v-icon
-              >
-            </v-col>
             <v-col class="col-auto" align="center">
               <v-icon size="40" @click="voteAnswer(1, answer)" color="primary"
                 >mdi-menu-up</v-icon
@@ -53,7 +41,36 @@
                 >mdi-menu-down</v-icon
               >
             </v-col>
-            <v-col cols="10" class="ml-4 mt-3" v-html="answer.body"></v-col>
+            <v-col cols="8" class="ml-4 mt-3" v-html="answer.body"></v-col>
+            <v-spacer></v-spacer>
+            <v-col
+              v-if="isValidEdit(answer)"
+              cols="2"
+              class="d-flex justify-end mr-4"
+            >
+              <v-btn
+                class="mr-1"
+                x-small
+                fab
+                dark
+                color="primary"
+                elevation="2"
+                @click="openDialogEdit(answer)"
+              >
+                <v-icon medium>mdi-pencil-outline</v-icon></v-btn
+              >
+              <v-btn
+                class="ml-1"
+                x-small
+                fab
+                dark
+                color="error"
+                elevation="2"
+                @click="openDialog(answer)"
+              >
+                <v-icon medium>mdi-trash-can-outline</v-icon></v-btn
+              >
+            </v-col>
             <v-col cols="12">
               <v-divider></v-divider>
             </v-col>

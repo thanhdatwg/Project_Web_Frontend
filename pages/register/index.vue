@@ -1,71 +1,73 @@
 <template>
-  <v-row>
-    <v-col cols="12" align="center">
-      <v-img
-        src="/background_login.png"
-        max-width="762"
-        max-height="200"
-        style="border-radius: 6px"
-      ></v-img>
-    </v-col>
-    <v-col cols="8" class="mx-auto">
-      <v-alert v-model="isAlert" type="error">
-        Email already exists
-      </v-alert>
-      <v-form @submit.prevent="validate">
-        <v-text-field
-          v-model="email"
-          label="Email"
-          type="text"
-          filled
-          class="rounded-t-lg"
-          placeholder=" "
-          :error-messages="email_errors"
-          @input="email_errors = []"
-        ></v-text-field>
-        <v-text-field
-          v-model="name"
-          label="Name"
-          type="text"
-          filled
-          class="rounded-t-lg"
-          placeholder=" "
-          :error-messages="name_errors"
-          @input="name_errors = []"
-        ></v-text-field>
-        <v-text-field
-          v-model="password"
-          label="Password"
-          type="password"
-          filled
-          class="rounded-t-lg mt-n1"
-          placeholder=" "
-          :error-messages="password_errors"
-          @input="password_errors = []"
-        ></v-text-field>
-        <v-text-field
-          v-model="password_confirmation"
-          label="Confirm Password"
-          type="password"
-          filled
-          class="rounded-t-lg mt-n1"
-          placeholder=" "
-          :error-messages="confirmpass_errors"
-          @input="confirmpass_errors = []"
-        ></v-text-field>
-        <v-btn
-          type="submit"
-          block
-          depressed
-          color="orange lighten-2"
-          class="text-body-2 font-weight-bold"
-        >
-          <v-row align="center">
-            <v-col class="col-auto mx-auto font-weight-medium">Sign Up</v-col>
-          </v-row>
-        </v-btn>
-      </v-form>
-    </v-col>
+  <v-row class="justify-center" style="margin-top: 84px">
+    <v-card style="width: 700px" elevation="4">
+      <v-card-title class="justify-center">Sign Up</v-card-title>
+      <v-divider></v-divider>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12" class="mx-auto">
+            <!-- <v-alert v-model="isAlert" type="error">
+              Email already exists
+            </v-alert> -->
+            <v-form @submit.prevent="validate">
+              <v-text-field
+                v-model="email"
+                label="Email"
+                type="text"
+                filled
+                class="rounded-t-lg"
+                placeholder=" "
+                :error-messages="email_errors"
+                @input="email_errors = []"
+              ></v-text-field>
+              <v-text-field
+                v-model="name"
+                label="Name"
+                type="text"
+                filled
+                class="rounded-t-lg"
+                placeholder=" "
+                :error-messages="name_errors"
+                @input="name_errors = []"
+              ></v-text-field>
+              <v-text-field
+                v-model="password"
+                label="Password"
+                type="password"
+                filled
+                class="rounded-t-lg mt-n1"
+                placeholder=" "
+                :error-messages="password_errors"
+                @input="password_errors = []"
+              ></v-text-field>
+              <v-text-field
+                v-model="password_confirmation"
+                label="Confirm Password"
+                type="password"
+                filled
+                class="rounded-t-lg mt-n1"
+                placeholder=" "
+                :error-messages="confirmpass_errors"
+                @input="confirmpass_errors = []"
+              ></v-text-field>
+              <v-btn
+                type="submit"
+                block
+                depressed
+                color="orange lighten-2"
+                class="text-body-2 font-weight-bold"
+              >
+                <v-row align="center">
+                  <v-col class="col-auto mx-auto font-weight-medium"
+                    >Sign Up</v-col
+                  >
+                </v-row>
+              </v-btn>
+            </v-form>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
   </v-row>
 </template>
 
@@ -82,8 +84,8 @@ export default {
       email_errors: [],
       name_errors: [],
       password_errors: [],
-      confirmpass_errors: [],
-      isAlert: false
+      confirmpass_errors: []
+      // isAlert: false
     };
   },
   methods: {
@@ -138,13 +140,16 @@ export default {
           console.log(error.response.data);
           let validate = error.response.data.errors;
           if (error.response.status == 422) {
-            if(typeof validate.email !== 'undefined' || validate.email != null){
+            if (
+              typeof validate.email !== "undefined" ||
+              validate.email != null
+            ) {
               this.email_errors = validate.email[0];
             }
-            if(typeof validate.password !== 'undefined'){
+            if (typeof validate.password !== "undefined") {
               this.password_errors = validate.password[0];
             }
-            if(typeof validate.name !== 'undefined'){
+            if (typeof validate.name !== "undefined") {
               this.name_errors = validate.name[0];
             }
             // this.isAlert = true;
