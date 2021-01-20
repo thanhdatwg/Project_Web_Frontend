@@ -2,12 +2,14 @@
   <div>
     <alertNotification :alertAskQuestion="alertAskQuestion"></alertNotification>
     <alertSuccess :alertFeedback="alertFeedback"></alertSuccess>
+    <alertWarning :alertWarning="alertWarning"></alertWarning>
     <detailQuestion
       :detailQuestion="detailQuestion"
       @favorite="favorite"
       @getDetailQuestion="getDetailQuestion"
       @openAlert="openAlert"
       @openAlertVote="openAlert"
+      @alertFeedback="openAlertSuccess"
     ></detailQuestion>
     <allAnswers
       :allAnswers="allAnswers"
@@ -17,6 +19,7 @@
       @getUpdateAnswer="getAllAnswer"
       @openAlertVote="openAlert"
       @alertFeedback="openAlertSuccess"
+      @alertWarning="openAlertWarning"
     ></allAnswers>
     <createAnswer
       :detailQuestion="detailQuestion"
@@ -33,13 +36,15 @@ import allAnswers from "~/components/AllAnswers.vue";
 import createAnswer from "~/components/CreateAnswer.vue";
 import alertNotification from "~/components/alertNotification.vue";
 import alertSuccess from "~/components/alertSuccess.vue";
+import alertWarning from "~/components/alertWarning.vue";
 export default {
   components: {
     detailQuestion,
     allAnswers,
     createAnswer,
     alertNotification,
-    alertSuccess
+    alertSuccess,
+    alertWarning
   },
   data() {
     return {
@@ -47,7 +52,8 @@ export default {
       allAnswers: [],
       favoritesCount: null,
       alertAskQuestion: false,
-      alertFeedback: false
+      alertFeedback: false,
+      alertWarning: false
     };
   },
   mounted() {
@@ -68,6 +74,12 @@ export default {
       setTimeout(() => {
         this.alertFeedback = false;
       }, 4000);
+    },
+    openAlertWarning(){
+      this.alertWarning = true;
+      setTimeout(() => {
+        this.alertWarning = false;
+      }, 3000);
     },
     getDetailQuestion() {
       axios
