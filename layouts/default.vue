@@ -15,14 +15,14 @@
           class="d-flex justify-end align-center pr-6"
           v-if="getToken()"
         >
-          <div>{{ nameAccount }}</div>
+          <div>Welcome {{ nameAccount }}</div>
           <v-menu offset-y transition="slide-y-transition" bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon v-bind="attrs" v-on="on">
                 <v-icon>mdi-menu-down</v-icon>
               </v-btn>
             </template>
-            <v-list style="width: 125px">
+            <v-list style="width: 150px">
               <v-list-item>
                 <v-list-item-title
                   @click="$router.push('/profile')"
