@@ -21,7 +21,7 @@
       <v-sheet
         id="scrolling-techniques-7"
         class="overflow-y-auto mt-14"
-        max-height="400"
+        max-height="700"
       >
         <v-card-text>
           <v-row

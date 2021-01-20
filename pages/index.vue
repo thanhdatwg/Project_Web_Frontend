@@ -42,7 +42,7 @@
             flat
           >
             <v-card-text>
-              <v-row no-gutters class="d-flex justify-center" align="center">
+              <v-row no-gutters class="d-flex" align="center">
                 <v-col
                   class="mr-1"
                   cols="1"
