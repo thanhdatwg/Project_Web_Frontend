@@ -7,7 +7,7 @@
         </v-col>
         <v-spacer></v-spacer>
         <v-col class="col-auto"
-          ><v-btn color="cyan lighten-1" depressed to="/create"
+          ><v-btn color="cyan lighten-1" depressed @click="askQuestion"
             >Ask Question</v-btn
           ></v-col
         >
@@ -71,25 +71,34 @@ export default {
     }
   },
   methods: {
+    askQuestion() {
+      if (Cookie.get("jwt") == undefined) {
+        this.$emit("openAlert");
+      } else this.$router.push("/create");
+    },
     voteQuestion(value) {
-      axios
-        .post(
-          "http://localhost:8000/api/questions/" +
-            this.detailQuestion.id +
-            "/vote",
-          { vote: value },
-          {
-            headers: {
-              Authorization: "Bearer " + Cookie.get("jwt")
+      if (Cookie.get("jwt") == undefined) {
+        this.$emit("openAlertVote");
+      } else {
+        axios
+          .post(
+            "http://localhost:8000/api/questions/" +
+              this.detailQuestion.id +
+              "/vote",
+            { vote: value },
+            {
+              headers: {
+                Authorization: "Bearer " + Cookie.get("jwt")
+              }
             }
-          }
-        )
-        .then(response => {
-          setTimeout(() => {
-            this.$emit("getDetailQuestion");
-          }, 500);
-        })
-        .catch(function(error) {});
+          )
+          .then(response => {
+            setTimeout(() => {
+              this.$emit("getDetailQuestion");
+            }, 500);
+          })
+          .catch(function(error) {});
+      }
     },
     favoriteQuestion() {
       this.$emit("favorite");

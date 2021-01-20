@@ -1,16 +1,6 @@
 <template>
   <div>
-    <v-alert
-      v-model="alertAskQuestion"
-      color="brown lighten-2"
-      dark
-      icon="mdi-alert-outline"
-      transition="scale-transition"
-      max-width="420"
-      style="z-index: 2; position: absolute;bottom: -2px;left: 10px;"
-      >Please login to ask question !!</v-alert
-    >
-
+    <alertNotification :alertAskQuestion="alertAskQuestion"></alertNotification>
     <v-card class="mt-2">
       <v-toolbar color="cyan" dark flat>
         <v-toolbar-title class="font-weight-bold"
@@ -75,10 +65,11 @@
                   cols="1"
                   align="center"
                   :style="
-                    infoQuestion.status === 'answered' ? `background-color: #38c172; color: white;` : 
-                    (infoQuestion.answers_count > 0
+                    infoQuestion.status === 'answered'
+                      ? `background-color: #38c172; color: white;`
+                      : infoQuestion.answers_count > 0
                       ? `border: 1px solid #38c172; color: #38c172`
-                      : false)
+                      : false
                   "
                 >
                   <div>{{ infoQuestion.answers_count }}</div>
@@ -89,7 +80,9 @@
                   cols="1"
                   align="center"
                   :style="
-                    infoQuestion.views >= 10 ? `border: 1px solid orange; color: orange` : false
+                    infoQuestion.views >= 10
+                      ? `border: 1px solid orange; color: orange`
+                      : false
                   "
                 >
                   <div>{{ infoQuestion.views }}</div>
@@ -200,7 +193,11 @@
 <script>
 import axios from "axios";
 import Cookie from "js-cookie";
+import alertNotification from "~/components/alertNotification.vue";
 export default {
+  components: {
+    alertNotification
+  },
   data() {
     return {
       tab: null,

@@ -43,30 +43,34 @@ export default {
   },
   methods: {
     postAnswer() {
-      let axiosConfig = {
-        headers: {
-          Authorization: "Bearer " + Cookie.get("jwt")
-        }
-      };
-      axios
-        .post(
-          "http://localhost:8000/api/questions/" +
-            this.detailQuestion.id +
-            "/answers",
-          {
-            body: this.textAnswer
-          },
-          axiosConfig
-        )
-        .then(response => {
-          if (response.status == 200) {
-            setTimeout(() => {
-              this.textAnswer = null;
-              this.$emit("getAllAnswerAgain");
-            }, 500);
+      if (Cookie.get("jwt") == undefined) {
+        this.$emit("openAlertVote");
+      } else {
+        let axiosConfig = {
+          headers: {
+            Authorization: "Bearer " + Cookie.get("jwt")
           }
-        })
-        .catch(function(error) {});
+        };
+        axios
+          .post(
+            "http://localhost:8000/api/questions/" +
+              this.detailQuestion.id +
+              "/answers",
+            {
+              body: this.textAnswer
+            },
+            axiosConfig
+          )
+          .then(response => {
+            if (response.status == 200) {
+              setTimeout(() => {
+                this.textAnswer = null;
+                this.$emit("getAllAnswerAgain");
+              }, 500);
+            }
+          })
+          .catch(function(error) {});
+      }
     }
   }
 };

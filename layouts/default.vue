@@ -15,7 +15,7 @@
           class="d-flex justify-end align-center pr-6"
           v-if="getToken()"
         >
-          <div>Welcome {{ nameAccount }}</div>
+          <div class="font-weight-medium">{{ nameAccount }}</div>
           <v-menu offset-y transition="slide-y-transition" bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon v-bind="attrs" v-on="on">

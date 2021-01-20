@@ -40,8 +40,10 @@
               <v-icon size="40" @click="voteAnswer(-1, answer)" color="primary"
                 >mdi-menu-down</v-icon
               >
+              <br />
+              <v-icon size="28">mdi-check-outline</v-icon>
             </v-col>
-            <v-col cols="8" class="ml-4 mt-3" v-html="answer.body"></v-col>
+            <v-col cols="8" class="ml-4 mt-n4" v-html="answer.body"></v-col>
             <v-spacer></v-spacer>
             <v-col
               v-if="isValidEdit(answer)"
@@ -228,23 +230,27 @@ export default {
       }
     },
     voteAnswer(value, answer) {
-      axios
-        .post(
-          "http://localhost:8000/api/answers/" + answer.id + "/vote",
-          { vote: value },
-          {
-            headers: {
-              Authorization: "Bearer " + Cookie.get("jwt")
+      if (Cookie.get("jwt") == undefined) {
+        this.$emit("openAlertVote");
+      } else {
+        axios
+          .post(
+            "http://localhost:8000/api/answers/" + answer.id + "/vote",
+            { vote: value },
+            {
+              headers: {
+                Authorization: "Bearer " + Cookie.get("jwt")
+              }
             }
-          }
-        )
-        .then(response => {
-          setTimeout(() => {
-            this.$emit("getDetailAnswer");
-          }, 500);
-        })
-        .catch(function(error) {});
-      console.log(this.allAnswers);
+          )
+          .then(response => {
+            setTimeout(() => {
+              this.$emit("getDetailAnswer");
+            }, 500);
+          })
+          .catch(function(error) {});
+        // console.log(this.allAnswers);
+      }
     }
   }
 };
