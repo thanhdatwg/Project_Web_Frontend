@@ -27,7 +27,6 @@
           <v-row
             v-for="(answer, index) in allAnswers"
             :key="index"
-            no-gutters
             align="center"
           >
             <v-col class="col-auto" align="center">
@@ -49,7 +48,7 @@
                 >mdi-check-bold</v-icon
               >
             </v-col>
-            <v-col cols="8" class="ml-4 mt-n4" v-html="answer.body"></v-col>
+            <v-col cols="9" class="ml-4 mt-n4" v-html="answer.body"></v-col>
             <v-spacer></v-spacer>
             <v-col
               v-if="isValidEdit(answer)"
@@ -114,7 +113,7 @@
 
     <v-dialog
       v-model="dialogEdit"
-      width="700"
+      width="500"
       transition="dialog-bottom-transition"
     >
       <v-card>
@@ -227,7 +226,7 @@ export default {
       // console.log(this.detailQuestion);
       if (answer.is_best){
         return true;
-      }else if (Cookie.get("jwt") == undefined) {
+      }else if (Cookie.get("jwt") == undefined) { 
         return false;
       } else {
         const info = Cookie.get("infoAcc");
