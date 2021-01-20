@@ -2,8 +2,13 @@
   <v-app>
     <v-app-bar app color="orange lighten-2" flat>
       <v-row no-gutters>
-        <v-col cols="4">
-          <v-toolbar-title class="ml-2">StackOverFlow</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-col cols="3">
+          <v-toolbar-title 
+            class="ml-2"
+            @click="$router.push('/')"
+            style="cursor: pointer;"
+          >StackOverFlow</v-toolbar-title>
         </v-col>
         <v-col cols="8" class="d-flex justify-end align-center">
           <v-btn class="mr-2" outlined color="grey darken-3" to="/login">

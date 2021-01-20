@@ -57,7 +57,7 @@
                   cols="1"
                   align="center"
                   :style="
-                    infoQuestion.answers_count >= 10
+                    infoQuestion.answers_count > 0
                       ? `border: 1px solid green`
                       : false
                   "
@@ -70,7 +70,7 @@
                   cols="1"
                   align="center"
                   :style="
-                    infoQuestion.views >= 10 ? `border: 1px solid green` : false
+                    infoQuestion.views >= 10 ? `border: 1px solid orange` : false
                   "
                 >
                   <div>{{ infoQuestion.views }}</div>
