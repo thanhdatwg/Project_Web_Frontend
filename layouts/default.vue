@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import Cookie from "js-cookie";
 export default {
   data() {
@@ -87,12 +88,33 @@ export default {
     },
     getToken() {
       if (Cookie.get("jwt") != null) {
-        const info = Cookie.get("infoAcc");
-        this.nameAccount = JSON.parse(info).name;
+        // const info = Cookie.get("infoAcc");
+        // this.nameAccount = JSON.parse(info).name;
         return true;
       } else return false;
     },
-    getNameAccount() {}
+    getNameAccount() {
+      axios
+        .get("http://localhost:8000/api/user", {
+          headers: {
+            Authorization: "Bearer " + Cookie.get("jwt")
+          }
+        })
+        .then(response => {
+          // console.log(response.data.avatar);
+          // this.email = response.data.email;
+          this.nameAccount = response.data.name;
+          // console.log(this.avatar);
+
+          // this.avatar = response.data.avatar;
+        })
+        .catch(error => {
+          console.log(error.response);
+        });
+    }
+  },
+  mounted() {
+    this.getNameAccount();
   }
 };
 </script>

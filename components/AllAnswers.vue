@@ -30,13 +30,21 @@
             align="center"
           >
             <v-col class="col-auto" align="center">
-              <v-icon size="40" @click="voteAnswer(1, answer)" color="primary" title="This answer is useful"
+              <v-icon
+                size="40"
+                @click="voteAnswer(1, answer)"
+                color="primary"
+                title="This answer is useful"
                 >mdi-menu-up</v-icon
               >
               <div class="text-body-1 font-weight-medium black--text">
                 {{ answer.votes_count }}
               </div>
-              <v-icon size="40" @click="voteAnswer(-1, answer)" color="primary" title="This answer is not useful"
+              <v-icon
+                size="40"
+                @click="voteAnswer(-1, answer)"
+                color="primary"
+                title="This answer is not useful"
                 >mdi-menu-down</v-icon
               >
               <br />
@@ -48,7 +56,7 @@
                 >mdi-check-bold</v-icon
               >
             </v-col>
-            <v-col cols="9" class="ml-4 mt-n4" v-html="answer.body"></v-col>
+            <v-col cols="8" class="ml-4 mt-n4" v-html="answer.body"></v-col>
             <v-spacer></v-spacer>
             <v-col
               v-if="isValidEdit(answer)"
@@ -150,12 +158,12 @@ export default {
   props: {
     allAnswers: {
       type: Array,
-      required: true,
+      required: true
     },
     detailQuestion: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
@@ -163,7 +171,7 @@ export default {
       questionId: null,
       answerId: null,
       dialogEdit: false,
-      bodyAnswer: null,
+      bodyAnswer: null
     };
   },
 
@@ -176,15 +184,15 @@ export default {
             "/answers/" +
             this.answerId,
           {
-            body: this.bodyAnswer,
+            body: this.bodyAnswer
           },
           {
             headers: {
-              Authorization: "Bearer " + Cookie.get("jwt"),
-            },
+              Authorization: "Bearer " + Cookie.get("jwt")
+            }
           }
         )
-        .then((response) => {
+        .then(response => {
           if (response.status == 200) {
             this.dialogEdit = false;
             this.$emit("getUpdateAnswer");
@@ -211,11 +219,11 @@ export default {
             this.answerId,
           {
             headers: {
-              Authorization: "Bearer " + Cookie.get("jwt"),
-            },
+              Authorization: "Bearer " + Cookie.get("jwt")
+            }
           }
         )
-        .then((response) => {
+        .then(response => {
           if (response.status == 200) {
             this.dialog = false;
             this.$emit("getAgainAllAnswers");
@@ -224,9 +232,9 @@ export default {
     },
     isValidAccept(answer) {
       // console.log(this.detailQuestion);
-      if (answer.is_best){
+      if (answer.is_best) {
         return true;
-      }else if (Cookie.get("jwt") == undefined) { 
+      } else if (Cookie.get("jwt") == undefined) {
         return false;
       } else {
         const info = Cookie.get("infoAcc");
@@ -260,45 +268,49 @@ export default {
             { vote: value },
             {
               headers: {
-                Authorization: "Bearer " + Cookie.get("jwt"),
-              },
+                Authorization: "Bearer " + Cookie.get("jwt")
+              }
             }
           )
-          .then((response) => {
+          .then(response => {
             this.$emit("alertFeedback");
             setTimeout(() => {
               this.$emit("getDetailAnswer");
             }, 500);
           })
-          .catch(function (error) {});
+          .catch(function(error) {});
         // console.log(this.allAnswers);
       }
     },
     acceptAnswer(answer) {
       if (Cookie.get("jwt") == undefined) {
         this.$emit("openAlertVote");
-      } else if(!answer.is_best){
-        const token = Cookie.get("jwt")
+      } else if (!answer.is_best) {
+        const token = Cookie.get("jwt");
         axios
-          .post("http://localhost:8000/api/answers/" + answer.id + "/accept", {},{
-            headers: {
-              Accept: 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((response) => {
+          .post(
+            "http://localhost:8000/api/answers/" + answer.id + "/accept",
+            {},
+            {
+              headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${token}`
+              }
+            }
+          )
+          .then(response => {
             this.$emit("alertFeedback");
             setTimeout(() => {
               this.$emit("getDetailAnswer");
             }, 500);
           })
-          .catch(function (error) {});
+          .catch(function(error) {});
         console.log(this.allAnswers);
-      }else{
+      } else {
         this.$emit("alertWarning");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
