@@ -215,9 +215,9 @@ export default {
   mounted() {
     this.dialogLoaded = true;
     this.getAllQuestions();
-      setTimeout(() => {
-        this.dialogLoaded = false;
-      }, 1000);
+    setTimeout(() => {
+      this.dialogLoaded = false;
+    }, 1000);
   },
   methods: {
     gotoDetailPage(infoQuestion) {
@@ -295,13 +295,13 @@ export default {
         this.alertAskQuestion = true;
         setTimeout(() => {
           this.alertAskQuestion = false;
-        }, 4000);
+        }, 3000);
       } else {
         this.dialogLoaded = true;
         setTimeout(() => {
           this.dialogLoaded = false;
           this.$router.push("/create");
-        }, 3000);
+        }, 2000);
       }
     }
   }
