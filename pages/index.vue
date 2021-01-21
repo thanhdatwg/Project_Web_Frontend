@@ -213,7 +213,11 @@ export default {
     };
   },
   mounted() {
-    this.getAllQuestions();
+    this.dialogLoaded = true;
+      setTimeout(() => {
+        this.getAllQuestions();
+        this.dialogLoaded = false;
+      }, 3000);
   },
   methods: {
     gotoDetailPage(infoQuestion) {
