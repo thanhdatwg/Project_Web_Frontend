@@ -214,10 +214,10 @@ export default {
   },
   mounted() {
     this.dialogLoaded = true;
+    this.getAllQuestions();
       setTimeout(() => {
-        this.getAllQuestions();
         this.dialogLoaded = false;
-      }, 3000);
+      }, 1000);
   },
   methods: {
     gotoDetailPage(infoQuestion) {
