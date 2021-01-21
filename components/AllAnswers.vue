@@ -61,7 +61,7 @@
             <v-col
               v-if="isValidEdit(answer)"
               cols="2"
-              class="d-flex justify-end mr-4"
+              class="d-flex justify-end mr-4 mt-n4"
             >
               <v-btn
                 class="mr-1"

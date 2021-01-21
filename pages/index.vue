@@ -1,6 +1,9 @@
 <template>
   <div>
     <alertNotification :alertAskQuestion="alertAskQuestion"></alertNotification>
+    <v-dialog v-model="dialogLoaded">
+      <loaded></loaded>
+    </v-dialog>
     <v-card class="mt-2">
       <v-toolbar color="cyan" dark flat>
         <v-toolbar-title class="font-weight-bold"
@@ -91,9 +94,7 @@
                 <v-spacer></v-spacer>
                 <v-col cols="6">
                   <div
-                    @click="
-                      $router.push('/question-detail/' + infoQuestion.slug)
-                    "
+                    @click="gotoDetailPage(infoQuestion)"
                     class="text-body-2 font-weight-medium"
                     style="color:#0064BD; cursor: pointer;"
                   >
@@ -207,13 +208,21 @@ export default {
       next_link: null,
       dialog: false,
       idQuestionDelete: null,
-      alertAskQuestion: false
+      alertAskQuestion: false,
+      dialogLoaded: false
     };
   },
   mounted() {
     this.getAllQuestions();
   },
   methods: {
+    gotoDetailPage(infoQuestion) {
+      this.dialogLoaded = true;
+      setTimeout(() => {
+        this.dialogLoaded = false;
+        this.$router.push("/question-detail/" + infoQuestion.slug);
+      }, 3000);
+    },
     openDialog(infoQuestion) {
       (this.dialog = true), (this.idQuestionDelete = infoQuestion.id);
     },
@@ -283,7 +292,13 @@ export default {
         setTimeout(() => {
           this.alertAskQuestion = false;
         }, 4000);
-      } else this.$router.push("/create");
+      } else {
+        this.dialogLoaded = true;
+        setTimeout(() => {
+          this.dialogLoaded = false;
+          this.$router.push("/create");
+        }, 3000);
+      }
     }
   }
 };

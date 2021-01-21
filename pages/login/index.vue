@@ -1,5 +1,8 @@
 <template>
   <v-row class="justify-center" style="margin-top: 120px">
+    <v-dialog v-model="dialog">
+      <loaded></loaded>
+    </v-dialog>
     <v-card style="width: 700px" elevation="4">
       <v-card-title class="justify-center">Login</v-card-title>
       <v-divider></v-divider>
@@ -54,15 +57,20 @@
 </template>
 
 <script>
+import loaded from "~/components/loaded.vue";
 export default {
   layout: "login",
+  components: {
+    loaded
+  },
   data() {
     return {
       email: "",
       password: null,
       password_errors: [],
       email_errors: [],
-      isAlert: false
+      isAlert: false,
+      dialog: false
     };
   },
   methods: {
@@ -93,7 +101,11 @@ export default {
         })
         .then(response => {
           if (this.$store.state.token != null) {
-            this.$router.push("/");
+            this.dialog = true;
+            setTimeout(() => {
+              this.dialog = false;
+              this.$router.push("/");
+            }, 3000);
           } else this.$router.push("/login");
 
           if (this.$store.state.status.status == 400) {
